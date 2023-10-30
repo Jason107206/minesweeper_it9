@@ -1,0 +1,81 @@
+@import './about.css';
+@import './minesweeper.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply select-none;
+  }
+
+  [hidden] {
+    @apply !hidden;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  h4 {
+    @apply text-lg;
+  }
+}
+
+@layer components {
+  a:hover {
+    @apply rounded-md shadow-lg;
+  }
+
+  .card {
+    @apply grid gap-8 p-8 bg-slate-100 shadow-md rounded-lg;
+  }
+  
+  button, .button {
+    @apply flex justify-center items-center gap-4 p-4 text-slate-700 bg-cyan-200 shadow-md rounded-lg transition hover:shadow-lg active:bg-slate-300 active:shadow-lg disabled:bg-gray-100 disabled:shadow-none;
+  }
+
+  .primary {
+    @apply bg-cyan-500 text-white;
+  }
+
+  .selected {
+    @apply !bg-slate-300 !shadow-lg; ''
+  }
+}
+
+@layer utilities {
+  html,
+  body,
+  #mainScreen,
+  #gameScreen {
+    @apply h-full w-full;
+  }
+
+  body {
+    @apply m-0 overflow-hidden bg-slate-300;
+  }
+
+  #mainScreen {
+    @apply flex flex-col md:flex-row items-center justify-evenly box-border;
+  }
+
+  #menu,
+  #settings,
+  #about {
+    @apply grid gap-6 w-[80vw] md:!w-[40vw];
+  }
+
+  #gameScreen {
+    @apply grid md:grid-cols-2 md:grid-rows-[1fr_auto] items-center justify-evenly box-border p-8;
+  }
+  
+  #gameScreen > div {
+    @apply w-[80vw] md:w-auto;
+  }
+}
+
+button, .card.button {
+  -webkit-tap-highlight-color: transparent;
+}

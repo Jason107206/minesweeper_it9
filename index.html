@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minesweeper</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="module" src="script.js"></script>
+</head>
+
+<body>
+  <div id="mainScreen">
+    <div class="w-[80vw] md:!w-[40vw] flex flex-col justify-center gap-6">
+      <div id="banner" hidden>
+        <div class="flex items-center justify-center transition">
+          <img src="img/flag.png" class="h-16 w-16 me-4" />
+          <div>
+            <h1 class="m-0 text-4xl">Minesweeper</h1>
+            <h2 class="m-0 text-xl">踩地雷</h2>
+          </div>
+        </div>
+      </div>
+
+      <div id="navigation" class="flex items-center gap-4 w-full" hidden>
+        <h3 id="currentSection" class="px-2 py-4 grow"></h3>
+        <button id="returnMenu">
+          <img src="img/icon/back.svg" />
+        </button>
+      </div>
+    </div>
+    
+    <div id="menu" hidden>
+      <button id="optionStartGame" class="primary">開始遊戲</button>
+      <div class="flex gap-4">
+        <button id="optionSettings" class="grow">
+          <img src="img/icon/settings.svg" />設定
+        </button>
+        <button id="optionAbout">
+          <img src="img/icon/info.svg" />關於
+        </button>
+      </div>
+    </div>
+    
+    <div id="settings" hidden>
+      <div>
+        <h3 class="mb-4">語言</h3>
+        <div class="flex gap-4">
+          <button id="lang_zh" class="selected">中文</button>
+          <button id="lang_en">English</button>
+        </div>
+      </div>
+      <div>
+        <h3 class="my-4">遊戲難度</h3>
+        <div class="flex flex-wrap gap-4">
+          <button id="difficultyEasy">
+            <span>簡單</span>
+            <span>❤️<sup> 4</sup></span>
+          </button>
+          <button id="difficultyHard">
+            <span>困難</span>
+            <span>❤️<sup> 2</sup></span>
+          </button>
+          <button id="difficultyExtreme">
+            <span>餓「死」</span>
+            <span>❤️<sup> 1</sup></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="about" hidden>
+      <button >玩法</button>
+      <button>開發人員資訊</button>
+      <button>版權資訊</button>
+    </div>
+  </div>
+
+  <div id="introductionScreen" hidden>
+    <h3>遊戲玩法</h3>
+    <p>遊戲開局中有個棋盤上散佈一些隱藏的地雷，需要在不踏上地雷之下翻開棋盤。</p>
+    <p>標記旗幟符號＝認為地雷在這格之上</p>
+    <p>點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【餓死版本】圖則為注意附近有雷</p>
+    <p>只要點到地雷就會扣減一顆紅心</p>
+  </div>
+
+  <div id="developerScreen" hidden>
+    <h3>開發者</h3>
+    <div>
+      <img src="img/dev/it9.jpg"/>
+      <div>
+        <h4>隊長</h4>
+        <p>馬天禮 —— 東華三院盧幹庭紀念中學<p>
+      </div>
+    </div>
+    <div>
+      <img src="img/dev/snow_cho.jpg"/>
+      <div>
+        <h4>介面設計</h4>
+        <p>曹雪 —— 青年會書院<p>
+      </div>
+    </div>
+    <div>
+      <img src="img/dev/namchoson.jpeg"/></img>
+      <div>
+        <h4>演算法設計</h4>
+        <p>陳文軒 —— 五旬節聖潔會永光書院<p>
+      </div>
+    </div>
+  </div>
+
+  <div id="copyrightScreen" class="card" hidden>
+    <h3>版權聲明</h3>
+    <p>本遊戲爲 偶像夢幻祭 的同人遊戲，僅供玩樂。遊戲內容若有侵犯版權，定必跟進。</p>
+    <p>遊戲中圖片取自 偶像夢幻祭官方 Line 貼圖組。</p>
+    <p>遊戲音效取自以下 Bilibili 影片。</p>
+    <ul>
+      <li><a href="https://www.bilibili.com/video/BV1TG41147Gi/?share_source=copy_web">【影片美伽的65种猫猫叫语气词【偶像梦幻祭/ES】小咪是猫猫实锤！】00:42～00:43</a></li>
+      <li><a href="https://www.bilibili.com/video/BV1y14y197SX/?share_source=copy_web">【长达55s的好日和——☆（好日和语音合集）】其中一個</a></li>
+      <li><a href="https://www.bilibili.com/video/BV1kU4y1h7KU/?share_source=copy_web">【来听巽哥给梅露应援】00:50～00:57</a></li>  
+      <li><a href ="https://www.bilibili.com/video/BV1Ph4y117ch/?share_source=copy_web">【谢谢，咔咔咔很洗脑（咔咔咔和non的合集）】00:18</a></li>
+    </ul>
+  </div>
+
+  <div id="gameScreen" hidden>
+    <div class="gameStatus">
+      <div>
+        <span>難度</span>
+        <span id="difficulty"></span>
+      </div>
+      <div>
+        <span></span>
+        <span id="remainingHealth"></span>
+      </div>
+      <div>
+        <span></span>
+        <span>🚩<sup id="remainingFlags"></sup></span>
+      </div>
+      <div>
+        <span></span>
+        <span>💣<sup id="remainingMine"></sup></span>
+      </div>
+    </div>
+    <div class="md:row-span-2 flex flex-col items-center gap-4">
+      <span id="timeCount">時間尚餘: 1:00</span>
+      <div id="gameBoard" class="grid grid-cols-4 gap-4"></div>
+    </div>
+    <div class="flex gap-6 justify-evenly">
+      <button id="exit" class="h:12 w-28 md:h-16 md:w-32">退出</button>
+      <button id="mode_flag" class="h:12 w-36 md:h-16 md:w-40">🚩 插旗</button>
+      <button id="mode_mine" class="h:12 w-36 md:h-16 md:w-40">💣 踩彈</button>
+    </div>
+  </div>
+</body>
+
+</html>

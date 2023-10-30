@@ -1,0 +1,13 @@
+@layer tile {
+  #gameBoard > span {
+    @apply h-12 md:h-20 w-12 md:w-20 flex items-center justify-center shadow-md rounded-lg bg-slate-50 transition hover:shadow-lg active:bg-slate-300 active:shadow-lg;
+  }
+
+  .boom {
+    @apply !bg-[#ff4d4d];
+  }
+
+  .flag {
+    @apply !bg-[#005d00];
+  }
+}
