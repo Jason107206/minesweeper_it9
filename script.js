@@ -14,7 +14,7 @@ window.onload = async () => {
   let sectionIndex = 0;
   
   document.querySelector('#returnMenu').onclick = async () => {
-    fadeElement('#navigation', 1, 600, 200);
+    fadeElement('#navigation', 0.75, 0, 600, 200);
     await hideElement(sectionIndex == 0 ? '#settings' : '#about', 1);
     showElement('#menu', 0);
   };
@@ -49,7 +49,7 @@ window.onload = async () => {
     });
     
     await hideElement('#menu', 1);
-    fadeElement('#navigation', 0, 600);
+    fadeElement('#navigation', 0, 0.75, 600);
     showElement('#settings', 0);
   };
 
@@ -58,7 +58,7 @@ window.onload = async () => {
     document.querySelector('#currentSection').textContent = '關於';
         
     await hideElement('#menu', 1);
-    fadeElement('#navigation', 0, 600);
+    fadeElement('#navigation', 0, 0.75, 600);
     showElement('#about', 0);
   };
   

@@ -11,22 +11,21 @@
 
 <body>
   <div id="mainScreen">
-    <div class="w-[80vw] md:!w-[40vw] flex flex-col gap-6 card">
-      <div id="banner" hidden>
-        <div class="flex items-center justify-center transition">
-          <img src="img/flag.png" class="h-16 w-16 me-4" />
+    <div class="w-[80vw] md:!w-[40vw] flex flex-col gap-6">
+      <div id="banner" class="card items-center" hidden>
+        <div class="flex flex-row items-center justify-center gap-4 transition">
+          <img src="img/flag.png" class="h-16 w-16" />
           <div>
             <h1 class="m-0 text-4xl">Minesweeper</h1>
             <h2 class="m-0 text-xl">踩地雷</h2>
           </div>
         </div>
-      </div>
-
-      <div id="navigation" class="flex items-center gap-4 w-full" hidden>
-        <h3 id="currentSection" class="py-4 grow"></h3>
-        <button id="returnMenu">
-          <img src="img/icon/back.svg" />
-        </button>
+        <div id="navigation" class="flex flex-row items-center justify-center w-full" hidden>
+					<h3 id="currentSection" class="py-4 grow"></h3>
+					<button id="returnMenu">
+			  		<img src="img/icon/back.svg" />
+					</button>
+	      </div>
       </div>
     </div>
     
@@ -43,15 +42,15 @@
     </div>
     
     <div id="settings" hidden>
-      <div>
-        <h3 class="mb-4">語言</h3>
+      <div class="card">
+        <h3>語言</h3>
         <div class="flex gap-4">
           <button id="lang_zh" class="selected">中文</button>
           <button id="lang_en">English</button>
         </div>
       </div>
-      <div>
-        <h3 class="my-4">遊戲難度</h3>
+      <div class="card">
+        <h3>遊戲難度</h3>
         <div class="flex flex-wrap gap-4">
           <button id="difficultyEasy">
             <span>簡單</span>

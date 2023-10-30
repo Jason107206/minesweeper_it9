@@ -705,13 +705,12 @@ a:hover {
 }
 
 .card {
-  display: grid;
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   border-radius: 0.5rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+  background-color: rgba(241,245,249,0.8);
   padding: 2rem;
-  opacity: 0.75;
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -728,7 +727,7 @@ button, .button {
   padding: 1rem;
   --tw-text-opacity: 1;
   color: rgb(51 65 85 / var(--tw-text-opacity));
-  opacity: 0.75;
+  opacity: 0.9;
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -889,19 +888,6 @@ button:disabled, .button:disabled {
 
 .m-1 {
   margin: 0.25rem;
-}
-
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
-.me-4 {
-  margin-inline-end: 1rem;
 }
 
 .mt-2 {

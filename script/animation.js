@@ -41,16 +41,12 @@ const showElement = async (e, d, t = 800) => {
   await new Promise(r => setTimeout(r, t));
 };
 
-const fadeElement = async (e, f, t = 800, w = 0) => {
-  if (f === 0) {
+const fadeElement = async (e, fs, fe, t = 800, w = 0) => {
+  if (fs === 0) {
     document.querySelector(e).hidden = 0;
   }
-  document.querySelector(e).animate(f === 0 ? {
-    opacity: [0, 1],
-    easing: ['ease-out', 'ease-in']
-  }
-  : {
-    opacity: [1, 0],
+  document.querySelector(e).animate({
+    opacity: [fs, fe],
     easing: ['ease-out', 'ease-in']
   }, 
   {
@@ -58,10 +54,10 @@ const fadeElement = async (e, f, t = 800, w = 0) => {
     iterations: 1,
   });
   await new Promise(r => setTimeout(r, t));
-  if (f === 1) {
+  if (fe === 0) {
     document.querySelector(e).style.opacity = 0;
     await new Promise(r => setTimeout(r, w));
     document.querySelector(e).hidden = 1;
-    document.querySelector(e).style.opacity = 1;
+    document.querySelector(e).style.opacity = fs;
   }
 };
