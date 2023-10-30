@@ -50,8 +50,10 @@ const initializeGame = (gameData) => {
   document.querySelector('#remainingMine').textContent = countOfMine;
   
   ['#mode_flag','#mode_mine'].map((x, i, a) => {
-    if (i === clickMode) {
+    if (i == clickMode) {
       document.querySelector(x).classList.add('selected');
+    } else {
+      document.querySelector(x).classList.remove('selected');
     }
     
     document.querySelector(x).onclick = () => {
