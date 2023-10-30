@@ -2570,7 +2570,7 @@ html,
 body {
   margin: 0px;
   overflow: hidden;
-  background-image: url('img/background.jpeg');
+  background-image: url('img/home_page_background.png');
   background-size: cover;
   background-repeat: no-repeat;
 }

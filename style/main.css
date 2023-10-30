@@ -54,7 +54,7 @@
   }
 
   body {
-    @apply m-0 overflow-hidden bg-[url('img/background.jpeg')] bg-no-repeat bg-cover;
+    @apply m-0 overflow-hidden bg-[url('img/home_page_background.png')] bg-no-repeat bg-cover;
   }
 
   #mainScreen {
