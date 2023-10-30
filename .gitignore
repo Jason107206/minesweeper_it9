@@ -1,0 +1,7 @@
+.replit
+c.sh
+node_modules/.
+package-lock.json
+package.json
+replit.nix
+tailwind.config.js
