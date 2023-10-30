@@ -34,11 +34,11 @@
   }
 
   .primary {
-    @apply bg-gray-500 text-white;
+    @apply bg-gray-400 text-white;
   }
 
   .selected {
-    @apply !bg-gray-400 !shadow-lg;
+    @apply !bg-gray-300 !shadow-lg;
   }
 }
 
