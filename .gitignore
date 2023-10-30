@@ -1,6 +1,6 @@
 .replit
 c.sh
-node_modules/.
+node_modules/
 package-lock.json
 package.json
 replit.nix

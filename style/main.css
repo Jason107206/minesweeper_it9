@@ -33,15 +33,15 @@
   }
   
   button, .button {
-    @apply flex justify-center items-center gap-4 p-4 text-slate-700 bg-cyan-200 shadow-md rounded-lg transition hover:shadow-lg active:bg-slate-300 active:shadow-lg disabled:bg-gray-100 disabled:shadow-none;
+    @apply flex justify-center items-center gap-4 p-4 text-slate-700 bg-gray-200 shadow-md rounded-lg transition hover:shadow-lg active:bg-gray-300 active:shadow-lg disabled:bg-gray-100 disabled:shadow-none;
   }
 
   .primary {
-    @apply bg-cyan-500 text-white;
+    @apply bg-gray-500 text-white;
   }
 
   .selected {
-    @apply !bg-slate-300 !shadow-lg; ''
+    @apply !bg-gray-300 !shadow-lg;
   }
 }
 
