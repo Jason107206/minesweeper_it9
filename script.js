@@ -13,7 +13,7 @@ var initialData = {
 window.onload = async () => {
   let sectionIndex = 0;
   
-  document.querySelector('#returnMenu').onclick = async () => {
+  document.querySelector('#returnToMenu').onclick = async () => {
     fadeElement('#navigation', 0.8, 0, 600, 200);
     await hideElement(sectionIndex == 0 ? '#settings' : '#about', 1);
     showElement('#menu', 0);
@@ -60,6 +60,34 @@ window.onload = async () => {
     await hideElement('#menu', 1);
     fadeElement('#navigation', 0, 0.8, 600);
     showElement('#about', 0);
+  };
+
+  document.querySelectorAll('.returnToAbout').forEach((x, i) => {
+    x.onclick = async () => {
+      if (i == 0) {
+        await hideElement('#introductionScreen', 1);
+      } else if (i == 1) {
+        await hideElement('#developerScreen', 1);
+      } else if (i == 2) {
+        await hideElement('#copyrightScreen', 1);
+      }
+      showElement('#mainScreen', 0);
+    };
+  });
+
+  document.querySelector('#optionIntroduction').onclick = async () => {
+    await hideElement('#mainScreen', 1);
+    showElement('#introductionScreen', 0);
+  };
+
+  document.querySelector('#optionDeveloper').onclick = async () => {
+    await hideElement('#mainScreen', 1);
+    showElement('#developerScreen', 0);
+  };
+
+  document.querySelector('#optionCopyright').onclick = async () => {
+    await hideElement('#mainScreen', 1);
+    showElement('#copyrightScreen', 0);
   };
   
   showElement('#banner', 0, 600);

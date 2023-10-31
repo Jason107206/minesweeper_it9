@@ -11,21 +11,19 @@
 
 <body>
   <div id="mainScreen">
-    <div class="w-[80vw] md:!w-[40vw] flex flex-col gap-6">
-      <div id="banner" class="items-center" hidden>
-        <div class="flex flex-row items-center justify-center gap-4">
-          <img src="img/flag.png" class="h-16 w-16" />
-          <div>
-            <h1 class="m-0 text-4xl">Minesweeper</h1>
-            <h2 class="m-0 text-xl">踩地雷</h2>
-          </div>
+    <div id="banner" class="w-[80vw] md:!w-[40vw] flex flex-col gap-6" hidden>
+      <div class="flex flex-row items-center justify-center gap-4">
+        <img src="img/flag.png" class="h-16 w-16" />
+        <div>
+          <h1 class="m-0 text-4xl">Minesweeper</h1>
+          <h2 class="m-0 text-xl">踩地雷</h2>
         </div>
-        <div id="navigation" class="flex flex-row items-center justify-center w-full" hidden>
-	  <h3 id="currentSection" class="py-4 grow"></h3>
-	  <button id="returnMenu">
-	    <img src="img/icon/back.svg" />
-	  </button>
-	</div>
+      </div>
+      <div id="navigation" class="flex flex-row items-center justify-center w-full" hidden>
+        <h3 id="currentSection" class="py-4 grow"></h3>
+        <button id="returnToMenu">
+          <img src="img/icon/back.svg" />
+        </button>
       </div>
     </div>
     
@@ -68,14 +66,19 @@
     </div>
     
     <div id="about" hidden>
-      <button >玩法</button>
-      <button>開發人員資訊</button>
-      <button>版權資訊</button>
+      <button id="optionIntroduction">玩法</button>
+      <button id="optionDeveloper">開發人員資訊</button>
+      <button id="optionCopyright">版權資訊</button>
     </div>
   </div>
 
   <div id="introductionScreen" hidden>
-    <h3>遊戲玩法</h3>
+    <nav>
+      <h3 class="grow">遊戲玩法</h3>
+      <button class="returnToAbout">
+        <img src="img/icon/back.svg" />
+      </button>
+    </nav>
     <p>遊戲開局中有個棋盤上散佈一些隱藏的地雷，需要在不踏上地雷之下翻開棋盤。</p>
     <p>標記旗幟符號＝認為地雷在這格之上</p>
     <p>點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【餓死版本】圖則為注意附近有雷</p>
@@ -83,32 +86,47 @@
   </div>
 
   <div id="developerScreen" hidden>
-    <h3>開發者</h3>
+    <nav>
+      <h3 class="grow">開發人員資訊</h3>
+      <button class="returnToAbout">
+        <img src="img/icon/back.svg" />
+      </button>
+    </nav>
     <div>
-      <img src="img/dev/it9.jpg"/>
       <div>
-        <h4>隊長</h4>
-        <p>馬天禮 —— 東華三院盧幹庭紀念中學<p>
+        <img src="img/dev/it9.jpg"/>
+        <div>
+          <h4>隊長</h4>
+          <p>馬天禮</p>
+          <p>東華三院盧幹庭紀念中學</p>
+        </div>
       </div>
-    </div>
-    <div>
-      <img src="img/dev/snow_cho.jpg"/>
       <div>
-        <h4>介面設計</h4>
-        <p>曹雪 —— 青年會書院<p>
+        <img src="img/dev/snow_cho.jpg"/>
+        <div>
+          <h4>介面設計</h4>
+          <p>曹雪</p>
+          <p>青年會書院</p>
+        </div>
       </div>
-    </div>
-    <div>
-      <img src="img/dev/namchoson.jpeg"/></img>
       <div>
-        <h4>演算法設計</h4>
-        <p>陳文軒 —— 五旬節聖潔會永光書院<p>
+        <img src="img/dev/namchoson.jpeg"/></img>
+        <div>
+          <h4>演算法設計</h4>
+          <p>陳文軒</p>
+          <p>五旬節聖潔會永光書院</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <div id="copyrightScreen" class="card" hidden>
-    <h3>版權聲明</h3>
+  <div id="copyrightScreen" hidden>
+    <nav>
+      <h3 class="grow">版權聲明</h3>
+      <button class="returnToAbout">
+        <img src="img/icon/back.svg" />
+      </button>
+    </nav>
     <p>本遊戲爲 偶像夢幻祭 的同人遊戲，僅供玩樂。遊戲內容若有侵犯版權，定必跟進。</p>
     <p>遊戲中圖片取自 偶像夢幻祭官方 Line 貼圖組。</p>
     <p>遊戲音效取自以下 Bilibili 影片。</p>

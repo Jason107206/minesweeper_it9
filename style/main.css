@@ -1,4 +1,5 @@
-@import './about.css';
+@import './screen.css';
+@import './developer.css';
 @import './minesweeper.css';
 
 @tailwind base;
@@ -27,10 +28,6 @@
   a:hover {
     @apply rounded-md shadow-lg;
   }
-
-  .card {
-    @apply flex flex-col p-8 gap-4 bg-[rgba(241,245,249,0.8)] shadow-md rounded-lg;
-  }
   
   button, .button {
     @apply flex justify-center items-center gap-4 p-4 text-slate-800 bg-gray-200 shadow-md rounded-lg opacity-90 transition hover:shadow-lg active:bg-gray-300 active:shadow-lg disabled:bg-gray-100 disabled:shadow-none;
@@ -55,24 +52,6 @@
 
   body {
     @apply m-0 overflow-hidden bg-[url('img/home_page_background.png')] bg-no-repeat bg-cover;
-  }
-
-  #mainScreen {
-    @apply flex flex-col md:flex-row items-center justify-evenly box-border;
-  }
-
-  #menu,
-  #settings,
-  #about {
-    @apply grid gap-6 w-[80vw] md:!w-[40vw];
-  }
-
-  #gameScreen {
-    @apply grid md:grid-cols-2 md:grid-rows-[1fr_auto] items-center justify-evenly box-border p-8;
-  }
-  
-  #gameScreen > div {
-    @apply w-[80vw] md:w-auto;
   }
 }
 

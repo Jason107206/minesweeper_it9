@@ -1,34 +1,123 @@
-@layer developer {
-  #developer {
-    display: grid;
-    gap: 2rem;
-  }
+#mainScreen {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
 
-  #developer h3 {
-    padding: 1.5rem;
+@media (min-width: 768px) {
+  #mainScreen {
+    flex-direction: row;
   }
+}
 
-  #developer > * {
-    border-radius: 0.5rem;
-    --tw-bg-opacity: 1;
-    background-color: rgb(248 250 252 / var(--tw-bg-opacity));
-    padding: 1rem;
-    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
-    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color) !important;
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
-  }
+#menu,
+#settings,
+#about {
+  display: grid;
+  width: 80vw;
+  gap: 1.5rem;
+}
 
-  #developer > div {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+@media (min-width: 768px) {
+  #menu,
+#settings,
+#about {
+    width: 40vw !important;
   }
+}
 
-  #developer img {
-    height: 2.5rem;
-    width: 2.5rem;
-    border-radius: 9999px;
+#introductionScreen, 
+#developerScreen, 
+#copyrightScreen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+#introductionScreen nav, 
+#developerScreen nav, 
+#copyrightScreen nav {
+  display: flex;
+  align-items: center;
+}
+
+#gameScreen {
+  box-sizing: border-box;
+  display: grid;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  #gameScreen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 1fr auto;
   }
+}
+
+#gameScreen > div {
+  width: 80vw;
+}
+
+@media (min-width: 768px) {
+  #gameScreen > div {
+    width: auto;
+  }
+}
+
+#developerScreen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+#developerScreen nav {
+  display: flex;
+}
+
+#developerScreen h3 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+#developerScreen h4 {
+  font-weight: 600;
+}
+
+#developerScreen > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+#developerScreen > div > div {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  opacity: 0.9;
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+#developerScreen > div > div img {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 9999px;
 }
 
 @layer tile {
@@ -704,18 +793,6 @@ a:hover {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  border-radius: 0.5rem;
-  background-color: rgba(241,245,249,0.8);
-  padding: 2rem;
-  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
 button, .button {
   display: flex;
   align-items: center;
@@ -1059,12 +1136,6 @@ button:disabled, .button:disabled {
 
 .border-separate {
   border-collapse: separate;
-}
-
-.scale-90 {
-  --tw-scale-x: .9;
-  --tw-scale-y: .9;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .\!transform {
@@ -2575,61 +2646,6 @@ body {
   background-repeat: no-repeat;
 }
 
-#mainScreen {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-@media (min-width: 768px) {
-  #mainScreen {
-    flex-direction: row;
-  }
-}
-
-#menu,
-  #settings,
-  #about {
-  display: grid;
-  width: 80vw;
-  gap: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  #menu,
-  #settings,
-  #about {
-    width: 40vw !important;
-  }
-}
-
-#gameScreen {
-  box-sizing: border-box;
-  display: grid;
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 2rem;
-}
-
-@media (min-width: 768px) {
-  #gameScreen {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: 1fr auto;
-  }
-}
-
-#gameScreen > div {
-  width: 80vw;
-}
-
-@media (min-width: 768px) {
-  #gameScreen > div {
-    width: auto;
-  }
-}
-
 button, .card.button {
   -webkit-tap-highlight-color: transparent;
 }
@@ -2717,12 +2733,6 @@ button, .card.button {
 
   .md\:w-40 {
     width: 10rem;
-  }
-
-  .md\:scale-100 {
-    --tw-scale-x: 1;
-    --tw-scale-y: 1;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
 

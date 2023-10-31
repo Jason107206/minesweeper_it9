@@ -1,0 +1,27 @@
+#developerScreen {
+	@apply flex flex-col gap-6 p-8;
+}
+
+#developerScreen nav {
+  @apply flex;
+}
+
+#developerScreen h3 {
+  @apply px-4 py-2;
+}
+
+#developerScreen h4 {
+  @apply font-semibold;
+}
+
+#developerScreen > div {
+  @apply flex flex-wrap gap-6;
+}
+
+#developerScreen > div > div {
+  @apply flex items-center gap-6 px-6 py-4 bg-slate-50 rounded-lg shadow-md opacity-90;
+}
+
+#developerScreen > div > div img {
+  @apply h-12 w-12 rounded-full;
+}
