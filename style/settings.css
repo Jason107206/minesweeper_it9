@@ -1,0 +1,19 @@
+#settings > div {
+  @apply flex flex-col gap-4;
+}
+
+#settings > div > div {
+  @apply flex flex-col md:flex-row;
+}
+
+#settings > div > div button {
+  @apply rounded-none;
+}
+
+#settings > div > div button:first-of-type {
+  @apply rounded-tl-lg rounded-tr-lg md:rounded-tr-none md:rounded-bl-lg;
+}
+
+#settings > div > div button:last-of-type {
+  @apply rounded-br-lg rounded-bl-lg md:rounded-bl-none md:rounded-tr-lg;
+}
