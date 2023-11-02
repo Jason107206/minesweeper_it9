@@ -1,4 +1,5 @@
 @import './screen.css';
+@import './settings.css';
 @import './developer.css';
 @import './minesweeper.css';
 
@@ -51,7 +52,15 @@
   }
 
   body {
-    @apply m-0 overflow-hidden bg-[url('img/home_page_background.png')] bg-no-repeat bg-cover;
+    @apply relative m-0 overflow-x-hidden font-serif;
+  }
+
+  #background {
+    @apply fixed top-0 left-0 z-[-10] w-full h-full blur-sm;
+  }
+
+  #background {
+    @apply bg-[url('img/home_page_background.png')] bg-cover bg-no-repeat;
   }
 }
 

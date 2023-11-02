@@ -10,12 +10,13 @@
 </head>
 
 <body>
+  <img id="background"/>
   <div id="mainScreen">
     <div id="banner" class="w-[80vw] md:!w-[40vw] flex flex-col gap-6" hidden>
-      <div class="flex flex-row items-center justify-center gap-4">
+      <div class="flex flex-row items-center justify-center gap-2">
         <img src="img/flag.png" class="h-16 w-16" />
         <div>
-          <h1 class="m-0 text-4xl">Minesweeper</h1>
+          <h1 class="m-0 text-5xl">Minesweeper</h1>
           <h2 class="m-0 text-xl">踩地雷</h2>
         </div>
       </div>
@@ -29,7 +30,7 @@
     
     <div id="menu" hidden>
       <button id="optionStartGame" class="primary">
-	<img src="img/icon/play.svg" />開始遊戲</button>
+	      <img src="img/icon/play.svg" />開始遊戲</button>
       <button id="optionSettings">
         <img src="img/icon/settings.svg" />設定
       </button>
@@ -39,16 +40,16 @@
     </div>
     
     <div id="settings" hidden>
-      <div class="flex flex-col gap-4">
+      <div>
         <h3>語言</h3>
-        <div class="flex gap-4">
+        <div>
           <button id="lang_zh" class="selected">中文</button>
           <button id="lang_en">English</button>
         </div>
       </div>
-      <div class="flex flex-col gap-4">
+      <div>
         <h3>遊戲難度</h3>
-        <div class="flex flex-wrap gap-4">
+        <div>
           <button id="difficultyEasy">
             <span>簡單</span>
             <span>❤️<sup> 4</sup></span>
