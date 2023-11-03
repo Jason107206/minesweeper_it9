@@ -1,5 +1,5 @@
 #gameBoard > span {
-  @apply h-16 md:h-20 w-16 md:w-20 flex items-center justify-center shadow-md rounded-lg bg-slate-50 transition hover:shadow-lg active:bg-slate-300 active:shadow-lg;
+  @apply h-16 md:h-20 w-16 md:w-20 flex items-center justify-center shadow-md rounded-lg bg-gray-200 opacity-90 hover:shadow-lg active:bg-gray-300 active:shadow-lg;
 }
 
 .boom {

@@ -35,7 +35,7 @@
   }
 
   .primary {
-    @apply bg-gray-400 text-white;
+    @apply bg-gray-500 text-white;
   }
 
   .selected {

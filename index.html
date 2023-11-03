@@ -13,7 +13,7 @@
   <img id="background"/>
   <div id="mainScreen">
     <div id="banner" class="w-[80vw] md:!w-[40vw] flex flex-col gap-6" hidden>
-      <div class="flex flex-row items-center justify-center gap-2">
+      <div class="flex flex-row items-center justify-center gap-2 scale-90 md:scale-100">
         <img src="img/flag.png" class="h-16 w-16" />
         <div>
           <h1 class="m-0 text-5xl">Minesweeper</h1>
@@ -163,9 +163,11 @@
       <div id="gameBoard" class="grid grid-cols-4 gap-4"></div>
     </div>
     <div class="flex gap-6 justify-evenly">
-      <button id="exit" class="h:12 w-28 md:h-16 md:w-32">退出</button>
-      <button id="mode_flag" class="h:12 w-36 md:h-16 md:w-40">🚩 插旗</button>
-      <button id="mode_mine" class="h:12 w-36 md:h-16 md:w-40">💣 踩彈</button>
+      <button id="exit">退出</button>
+      <div class="flex">
+        <button id="mode_flag" class="rounded-tl-lg rounded-bl-lg rounded-none">🚩 插旗</button>
+        <button id="mode_mine" class="rounded-tr-lg rounded-br-lg rounded-none">💣 踩彈</button>
+      </div>
     </div>
   </div>
 </body>

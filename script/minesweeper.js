@@ -2,7 +2,10 @@ export { initializeGame };
 import { hideElement, showElement } from './animation.js';
 
 const initializeGame = (gameData) => {
-  let clickMode = 0;
+  let clickMode = 1;
+  let healthPoint = 0;
+  let countOfMine = gameData.mines;
+  let countOfFlag = gameData.columns * gameData.rows - gameData.mines;
   
   const generateMines = () => {
     let indexListOfMine = [];
@@ -42,7 +45,7 @@ const initializeGame = (gameData) => {
     return surroundingMines;
   };
 
-  const searchForSurroundingEmptyMines = (selectedX, selectedY) => {
+  const searchForSurroundingEmptyTiles = (selectedX, selectedY, processedTiles) => {
     for (let currentX = -1; currentX < 2; currentX++) {
       for (let currentY = -1; currentY < 2; currentY++) {
         let targetX = selectedX + currentX;
@@ -51,17 +54,19 @@ const initializeGame = (gameData) => {
           targetX >= 0,
           targetX < gameData.columns,
           targetY >= 0,
-          targetY < gameData.rows
+          targetY < gameData.rows,
+          !processedTiles.includes(`${targetX}_${targetY}`)
         ];
 
         if (conditions.every(x => x == 1)) {
+          let surroundingMinesCount = countSurroundingMines(targetX, targetY);
+          let tile = document.querySelector(`#tile_${targetX}_${targetY}`);
+          tile.textContent = surroundingMinesCount;
+          processedTiles.push(`${targetX}_${targetY}`);
           console.log(targetX, targetY);
-          let surroundingMines = countSurroundingMines(targetX, targetY);
-  
-          if (surroundingMines == 0) {
-            let tile = document.querySelector(`#tile_${targetX}_${targetY}`);
-            tile.textContent = surroundingMines;
-            searchForSurroundingEmptyMines(currentX, currentY);
+          
+          if (surroundingMinesCount == 0) {
+            searchForSurroundingEmptyTiles(currentX, currentY, processedTiles);
           }
         }
       }
@@ -74,7 +79,6 @@ const initializeGame = (gameData) => {
   };
   
   document.querySelector('#gameBoard').innerHTML = '';
-  let healthPoint, countOfMine = gameData.mines, countOfFlag = gameData.columns * gameData.rows - gameData.mines;
   
   if (gameData.difficulty == 0) {
     healthPoint = 4;
@@ -88,17 +92,14 @@ const initializeGame = (gameData) => {
     healthPoint = 1;
     document.querySelector('#difficulty').textContent = '餓「死」';
   }
+  
   document.querySelector('#remainingHealth').textContent = '❤️'.repeat(healthPoint);
   document.querySelector('#remainingMines').textContent = countOfMine;
   document.querySelector('#remainingFlags').textContent = countOfFlag;
-  
+
+  document.querySelector('#mode_flag').classList.remove('selected');
+  document.querySelector('#mode_mine').classList.add('selected');
   ['#mode_flag','#mode_mine'].map((x, i, a) => {
-    if (i == clickMode) {
-      document.querySelector(x).classList.add('selected');
-    } else {
-      document.querySelector(x).classList.remove('selected');
-    }
-    
     document.querySelector(x).onclick = () => {
       clickMode = i;
       document.querySelector(a[i]).classList.add('selected');
@@ -146,7 +147,7 @@ const initializeGame = (gameData) => {
               tile.textContent = surroundingMines;
 
               if (surroundingMines == 0) {
-                //searchForSurroundingEmptyMines(currentX, currentY);
+                searchForSurroundingEmptyTiles(currentX, currentY, []);
               }
             }
           }
