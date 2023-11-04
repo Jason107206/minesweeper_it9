@@ -1,4 +1,4 @@
-import { ininitalizeLanguage } from './script/language.js';
+import { initalizeLanguage } from './script/language.js';
 import { hideElement, showElement, fadeElement } from './script/animation.js';
 import { initializeGame } from './script/minesweeper.js';
 
@@ -10,7 +10,7 @@ var initialData = {
   mines: 4
 };
 
-var stringList = ininitalizeLanguage(0);
+var stringList = initalizeLanguage(0);
 
 const initializeSettings = () => {
   ['#difficultyEasy', '#difficultyHard', '#difficultyExtreme'].map((x, i, a) => {
@@ -89,6 +89,13 @@ window.onload = async () => {
     initializeGame(initialData);
     
     await hideElement('#mainScreen', 1);
-    await showElement('#gameScreen', 1);
-  };
+    await showElement('#gameScreen', 0);
+  }
+  
+  document.querySelector('#startGameDemo').onclick = async () => {
+    initializeGame(initialData, 1);
+    
+    await hideElement('#mainScreen', 1);
+    await showElement('#gameScreen', 0);
+  }
 };

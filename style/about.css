@@ -2,10 +2,6 @@
   @apply gap-12;
 }
 
-#aboutScreen h2 {
-  @apply text-3xl font-semibold;
-}
-
 #aboutScreen > section {
   @apply flex flex-col gap-4;
 }

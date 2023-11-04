@@ -1,12 +1,13 @@
-export { ininitalizeLanguage };
-
-var stringList;
+export { initalizeLanguage };
 
 const stringList_tc = {
   appName: '踩地雷',
   gameplay: '遊戲',
   settings: '設定',
   aboutUs: '關於',
+
+  leave: '退出',
+  sure: '確定？',
 
   back_to_home: '返回主頁',
   start_game: '開始遊戲',
@@ -50,6 +51,9 @@ const stringList_en = {
   settings: 'Settings',
   aboutUs: 'About Us',
 
+  leave: 'Leave',
+  sure: 'Sure?',
+
   back_to_home: 'Back To Home',
   start_game: 'Start Games',
   settings: 'Game Settings',
@@ -88,7 +92,9 @@ const stringList_en = {
   boom: '💣 Bomb'
 };
 
-const ininitalizeLanguage = (languageCode) => {
+const initalizeLanguage = (languageCode) => {
+  let stringList;
+
   if (languageCode == 0) {
     stringList = stringList_tc;
   } else {

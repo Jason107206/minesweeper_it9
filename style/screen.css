@@ -1,14 +1,14 @@
 #mainScreen,
 #settingsScreen,
 #aboutScreen {
-	@apply w-full h-full box-border;
+	@apply w-full h-full p-8 gap-4 box-border;
 }
 
 #mainScreen {
-	@apply flex flex-col items-center justify-center;
+	@apply flex flex-col;
 }
 
 #settingsScreen,
 #aboutScreen {
-	@apply flex flex-col p-8 gap-4 overflow-y-auto;
+	@apply flex flex-col overflow-y-auto;
 }

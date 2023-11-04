@@ -51,10 +51,17 @@
       </div>
       
       <div id="mainScreen">
-        <div class="flex flex-col gap-4">
+        <div class="grow">
+          <h2 id="lastGame"></h2>
+        </div>
+        <div class="flex justify-evenly gap-4">
           <button id="startGame" class="btn-primary">
             <img src="img/icon/add.svg" />
             <span>開新遊戲</span>
+          </button>
+          <button id="startGameDemo" class="btn-primary" hidden>
+            <img src="img/icon/add.svg" />
+            <span>開D新遊戲</span>
           </button>
           <button class="btn-secondary" hidden>
             <img src="img/icon/open.svg" />
@@ -82,8 +89,11 @@
             <span>💣<sup id="remainingMines"></sup></span>
           </div>
         </div>
-        <span id="timeCount">時間尚餘: 1:00</span>
-        <div id="gameBoard" class="grid items-center gap-4"></div>
+        <div id="timeContainer" class="flex gap-4">
+          <span>時間尚餘:</span>
+          <span id="timeRemaining"></span>
+        </div>
+        <div id="gameBoard" class="grid items-center justify-center gap-4"></div>
         <div class="flex gap-6 justify-evenly">
           <button id="exit" class="btn-secondary">退出</button>
           <div class="flex">
