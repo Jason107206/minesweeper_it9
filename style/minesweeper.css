@@ -2,12 +2,9 @@
 	@apply flex flex-col items-center justify-evenly box-border p-8;
 }
 
+
 #gameScreen > div {
 	@apply w-[80vw] md:w-auto;
-}
-
-#gameScreen > div:first-of-type {
-  @apply flex flex-col md:flex-row justify-evenly
 }
 
 #gameScreen button {
@@ -18,12 +15,9 @@
   @apply h-20 w-20 flex items-center justify-center shadow-md rounded-full bg-gray-200 text-2xl opacity-90 hover:shadow-lg active:bg-gray-300 active:shadow-lg;
 }
 
-#gameStatus {
-  @apply flex flex-col justify-evenly px-8 py-4 gap-4 bg-slate-50 rounded-full shadow-md opacity-80;
-}
-
-#gameStatus > div {
-  @apply flex flex-wrap justify-evenly gap-4;
+#gameStatus,
+#timeContainer {
+  @apply flex flex-wrap justify-evenly px-6 py-4 gap-4 bg-slate-50 rounded-full shadow-md opacity-80;
 }
 
 .boom {
