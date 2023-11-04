@@ -20,9 +20,9 @@
 }
 
 .boom {
-  @apply !bg-red-400;
+  @apply !bg-red-400 active:!bg-red-500;
 }
 
 .flag {
-  @apply !bg-green-300;
+  @apply !bg-green-300 active:!bg-green-400;
 }

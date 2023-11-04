@@ -252,13 +252,23 @@
   background-color: rgb(248 113 113 / var(--tw-bg-opacity)) !important;
 }
 
+.boom:active {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity)) !important;
+}
+
 .flag {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(134 239 172 / var(--tw-bg-opacity)) !important;
 }
 
+.flag:active {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity)) !important;
+}
+
 /*
-! tailwindcss v3.3.5 | MIT License | https://tailwindcss.com
+! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -936,14 +946,14 @@ button {
 
 .btn-primary {
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(2 132 199 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .btn-primary:active {
   --tw-bg-opacity: 1;
-  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+  background-color: rgb(3 105 161 / var(--tw-bg-opacity));
 }
 
 .btn-secondary {
@@ -2211,9 +2221,9 @@ button {
   border-style: none;
 }
 
-.\!bg-gray-500 {
+.\!bg-sky-600 {
   --tw-bg-opacity: 1 !important;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity)) !important;
+  background-color: rgb(2 132 199 / var(--tw-bg-opacity)) !important;
 }
 
 .bg-\[rgb\(255\2c 0\2c 0\)\] {

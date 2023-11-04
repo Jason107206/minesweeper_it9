@@ -48,7 +48,7 @@
   }
 
   .btn-primary {
-    @apply bg-gray-500 active:bg-gray-600 text-white;
+    @apply bg-sky-600 active:bg-sky-700 text-white;
   }
 
   .btn-secondary {
