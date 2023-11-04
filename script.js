@@ -82,7 +82,7 @@ window.onload = async () => {
     document.querySelector('#drawerOpen > img').src = 'img/icon/menu.svg';
     await hideElement('#drawer > div', 0);
     hideElement('#drawer', 0, 0);
-    isDrawerOpened = +!isDrawerOpened;
+    isDrawerOpened = 0;
   };
   
   document.querySelector('#startGame').onclick = async () => {
