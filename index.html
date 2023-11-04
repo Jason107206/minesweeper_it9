@@ -72,31 +72,32 @@
       
       <div id="gameScreen" hidden>
         <img id="background" class="bg-slate-200"/>
-        <div id="gameStatus">
-          <div>
-            
+        <div>
+          <div id="gameStatus">
+            <div>
+              <div>
+                <span id="difficulty"></span>
+              </div>
+              <div>
+                <span></span>
+                <span id="remainingHealth"></span>
+              </div>
+              <div>
+                <span></span>
+                <span>🚩<sup id="remainingFlags"></sup></span>
+              </div>
+              <div>
+                <span></span>
+                <span>💣<sup id="remainingMines"></sup></span>
+              </div>
+            </div>
+            <div id="timeContainer" class="flex gap-4">
+              <span>時間尚餘:</span>
+              <span id="timeRemaining"></span>
+            </div>
           </div>
-          <div>
-            <span id="difficulty"></span>
-          </div>
-          <div>
-            <span></span>
-            <span id="remainingHealth"></span>
-          </div>
-          <div>
-            <span></span>
-            <span>🚩<sup id="remainingFlags"></sup></span>
-          </div>
-          <div>
-            <span></span>
-            <span>💣<sup id="remainingMines"></sup></span>
-          </div>
+          <div id="gameBoard" class="grid items-center justify-center gap-4"></div>
         </div>
-        <div id="timeContainer" class="flex gap-4">
-          <span>時間尚餘:</span>
-          <span id="timeRemaining"></span>
-        </div>
-        <div id="gameBoard" class="grid items-center justify-center gap-4"></div>
         <div class="flex gap-6 justify-evenly">
           <button id="exit" class="btn-secondary">退出</button>
           <div class="flex">

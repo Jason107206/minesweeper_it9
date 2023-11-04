@@ -173,6 +173,10 @@ const initializeGame = async (gameData, demo = 0) => {
       clearInterval(countdown);
       await returnMenu();
       document.querySelector('#exit').textContent = stringList.leave;
+      if (gameData.diffculty == 2) {
+        var audio = new Audio('voice/leave.mp3');
+        audio.play();
+      }
     } else if (isConfirmedExit == 0) {
       isConfirmedExit = 1;
       document.querySelector('#exit').textContent = stringList.sure;
