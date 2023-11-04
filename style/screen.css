@@ -1,29 +1,14 @@
+#mainScreen,
+#settingsScreen,
+#aboutScreen {
+	@apply w-full h-full box-border;
+}
+
 #mainScreen {
-	@apply flex flex-col md:flex-row items-center justify-evenly box-border;
+	@apply flex flex-col items-center justify-center;
 }
 
-#menu,
-#settings,
-#about {
-	@apply grid gap-6 w-[80vw] md:!w-[40vw];
-}
-
-#introductionScreen, 
-#developerScreen, 
-#copyrightScreen {
-	@apply flex flex-col gap-6 p-8;
-}
-
-#introductionScreen nav, 
-#developerScreen nav, 
-#copyrightScreen nav {
-	@apply flex items-center;
-}  
-
-#gameScreen {
-	@apply grid md:grid-cols-2 md:grid-rows-[1fr_auto] items-center justify-evenly box-border p-8;
-}
-
-#gameScreen > div {
-	@apply w-[80vw] md:w-auto;
+#settingsScreen,
+#aboutScreen {
+	@apply flex flex-col p-8 gap-4 overflow-y-auto;
 }

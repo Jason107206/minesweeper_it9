@@ -1,6 +1,7 @@
 @import './screen.css';
+@import './drawer.css';
 @import './settings.css';
-@import './developer.css';
+@import './about.css';
 @import './minesweeper.css';
 
 @tailwind base;
@@ -26,20 +27,40 @@
 }
 
 @layer components {
-  a:hover {
-    @apply rounded-md shadow-lg;
-  }
-  
-  button, .button {
-    @apply flex justify-center items-center gap-4 p-4 text-slate-800 bg-gray-200 shadow-md rounded-lg opacity-90 transition hover:shadow-lg active:bg-gray-300 active:shadow-lg disabled:bg-gray-100 disabled:shadow-none;
+  button {
+    @apply flex items-center justify-center transition;
   }
 
-  .primary {
-    @apply bg-gray-500 text-white;
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .btn-icon {
+    @apply gap-4 p-4 rounded-full active:bg-gray-300 opacity-90;
   }
 
-  .selected {
-    @apply !bg-gray-300 !shadow-lg;
+  .btn-primary,
+  .btn-secondary {
+    @apply shadow-md hover:shadow-lg active:shadow-lg disabled:shadow-none;
+  }
+
+  .btn-primary {
+    @apply bg-gray-500 active:bg-gray-600 text-white;
+  }
+
+  .btn-secondary {
+    @apply text-slate-800 bg-gray-200 disabled:bg-gray-100;
+  }
+
+  .btn-outline {
+    @apply border border-black disabled:border-gray-100 disabled:text-gray-100;
+  }
+
+  .btn-icon {
+    @apply gap-4 p-4 rounded-full opacity-90 disabled:bg-gray-100;
+  }
+
+  .btn-selected {
+    @apply !bg-gray-300;
   }
 }
 
@@ -52,7 +73,7 @@
   }
 
   body {
-    @apply relative m-0 overflow-x-hidden font-serif;
+    @apply relative m-0 overflow-x-hidden;
   }
 
   #background {
@@ -60,7 +81,7 @@
   }
 
   #background {
-    @apply bg-[url('img/home_page_background.png')] bg-cover bg-no-repeat;
+    @apply bg-[url('img/bg.png')] bg-cover bg-no-repeat;
   }
 }
 

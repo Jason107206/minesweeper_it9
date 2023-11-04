@@ -1,4 +1,4 @@
-//import { changeLanguage } from './script/language.js';
+import { ininitalizeLanguage } from './script/language.js';
 import { hideElement, showElement, fadeElement } from './script/animation.js';
 import { initializeGame } from './script/minesweeper.js';
 
@@ -10,86 +10,85 @@ var initialData = {
   mines: 4
 };
 
-window.onload = async () => {
-  let sectionIndex = 0;
-  
-  document.querySelector('#returnToMenu').onclick = async () => {
-    fadeElement('#navigation', 0.8, 0, 600, 200);
-    await hideElement(sectionIndex == 0 ? '#settings' : '#about', 1);
-    showElement('#menu', 0);
-  };
-  
-  document.querySelector('#optionStartGame').onclick = async () => {
-    initializeGame(initialData);
+var stringList = ininitalizeLanguage(0);
+
+const initializeSettings = () => {
+  ['#difficultyEasy', '#difficultyHard', '#difficultyExtreme'].map((x, i, a) => {
+    if (i == initialData.difficulty) {
+      document.querySelector(x).classList.add('btn-selected');
+    }
     
-    await hideElement('#mainScreen', 1);
-    await showElement('#gameScreen', 0);
-    
-    document.querySelector('#exit').onclick = async () => {
-      await hideElement('#gameScreen', 1);
-      await showElement('#mainScreen', 0);
+    document.querySelector(x).onclick = () => {
+      initialData.difficulty = i;
+      initialData.healthPoint = i == 0 ? 4 : i == 1 ? 2 : 1;
+      document.querySelector(x).classList.add('btn-selected');
+      document.querySelector(a[i == 0 ? 1 : 0]).classList.remove('btn-selected');
+      document.querySelector(a[i == 0 ? 2 : 3 - i]).classList.remove('btn-selected');
     };
-  };
+  });
+}
+
+window.onload = async () => {
+  let pageIndex = 0;
+  let isDrawerOpened = 0;
   
-  document.querySelector('#optionSettings').onclick =  async () => {
-    sectionIndex = 0;
-    document.querySelector('#currentSection').textContent = '設定';
-    
-    ['#difficultyEasy', '#difficultyHard', '#difficultyExtreme'].map((x, i, a) => {
-      if (i == initialData.difficulty) {
-        document.querySelector(x).classList.add('selected');
-      }
-      
-      document.querySelector(x).onclick = () => {
-        initialData.difficulty = i;
-        document.querySelector(x).classList.add('selected');
-        document.querySelector(a[i == 0 ? 1 : 0]).classList.remove('selected');
-        document.querySelector(a[i == 0 ? 2 : 3 - i]).classList.remove('selected');
-      };
-    });
-    
-    await hideElement('#menu', 1);
-    fadeElement('#navigation', 0, 0.8, 600);
-    showElement('#settings', 0);
-  };
-
-  document.querySelector('#optionAbout').onclick = async () => {
-    sectionIndex = 1;
-    document.querySelector('#currentSection').textContent = '關於';
+  ['#optionGame', '#optionSettings', '#optionAbout'].map((x, i, a) => {
+    document.querySelector(x).onclick = async () => {
+      if (!(pageIndex == i)) {
+        document.querySelector(x).classList.add('drawerSelected');
+        document.querySelector(a[i == 0 ? 1 : 0]).classList.remove('drawerSelected');
+        document.querySelector(a[i == 0 ? 2 : 3 - i]).classList.remove('drawerSelected');
         
-    await hideElement('#menu', 1);
-    fadeElement('#navigation', 0, 0.8, 600);
-    showElement('#about', 0);
-  };
+        let pageCurrent = pageIndex == 0 ? "#mainScreen" : pageIndex == 1 ? "#settingsScreen" : "#aboutScreen";
+        let pageTo = i == 0 ? "#mainScreen" : i == 1 ? "#settingsScreen" : "#aboutScreen";
+        pageIndex = i;
 
-  document.querySelectorAll('.returnToAbout').forEach((x, i) => {
-    x.onclick = async () => {
-      if (i == 0) {
-        await hideElement('#introductionScreen', 1);
-      } else if (i == 1) {
-        await hideElement('#developerScreen', 1);
-      } else if (i == 2) {
-        await hideElement('#copyrightScreen', 1);
+        if (pageIndex == 0) {
+          document.querySelector('#pageTitle').textContent = stringList.appName;
+        } else if (pageIndex == 1) {
+          document.querySelector('#pageTitle').textContent = stringList.settings;
+          initializeSettings();
+        } else if (pageIndex == 2) {
+          document.querySelector('#pageTitle').textContent = stringList.aboutUs;
+        }
+        
+        await hideElement(pageCurrent, 1);
+        showElement(pageTo, 0);
+        
+        if ((Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) < 768)) {
+          await hideElement('#drawer > div', 0);
+          hideElement('#drawer', 0, 0);
+          document.querySelector('#drawerOpen > img').src = 'img/icon/menu.svg';
+          isDrawerOpened = +!isDrawerOpened;
+        }
       }
-      showElement('#mainScreen', 0);
     };
   });
 
-  document.querySelector('#optionIntroduction').onclick = async () => {
-    await hideElement('#mainScreen', 1);
-    showElement('#introductionScreen', 0);
+  document.querySelector('#drawerOpen').onclick = async () => {
+    if (isDrawerOpened == 1) {
+      await hideElement('#drawer > div', 0);
+      hideElement('#drawer', 0, 0);
+      document.querySelector('#drawerOpen > img').src = 'img/icon/menu.svg';
+    } else {
+      showElement('#drawer', 1, 0);
+      showElement('#drawer > div', 1);
+      document.querySelector('#drawerOpen > img').src = 'img/icon/menu_open_white.svg';
+    }
+    isDrawerOpened = +!isDrawerOpened;
   };
 
-  document.querySelector('#optionDeveloper').onclick = async () => {
-    await hideElement('#mainScreen', 1);
-    showElement('#developerScreen', 0);
-  };
-
-  document.querySelector('#optionCopyright').onclick = async () => {
-    await hideElement('#mainScreen', 1);
-    showElement('#copyrightScreen', 0);
+  document.querySelector('#drawerClose').onclick = async () => {
+    document.querySelector('#drawerOpen > img').src = 'img/icon/menu.svg';
+    await hideElement('#drawer > div', 0);
+    hideElement('#drawer', 0, 0);
+    isDrawerOpened = +!isDrawerOpened;
   };
   
-  showElement('#banner', 0, 600);
-  showElement('#menu', 0);
+  document.querySelector('#startGame').onclick = async () => {
+    initializeGame(initialData);
+    
+    await hideElement('#mainScreen', 1);
+    await showElement('#gameScreen', 1);
+  };
 };

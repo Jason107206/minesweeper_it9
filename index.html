@@ -10,166 +10,176 @@
 </head>
 
 <body>
-  <img id="background"/>
-  <div id="mainScreen">
-    <div id="banner" class="w-[80vw] md:!w-[40vw] flex flex-col gap-6" hidden>
-      <div class="flex flex-row items-center justify-center gap-2 scale-90 md:scale-100">
-        <img src="img/flag.png" class="h-16 w-16" />
-        <div>
-          <h1 class="m-0 text-5xl">Minesweeper</h1>
-          <h2 class="m-0 text-xl">踩地雷</h2>
+  <div id="screen" class="flex flex-col w-full h-full">
+    <nav class="sticky top-0 flex w-full p-4 gap-2 bg-white z-10 !bg-gray-500 shadow-md">
+      <button id="drawerOpen" class="btn-icon">
+        <img src="img/icon/menu.svg"/>
+      </button>
+      <div class="flex flex-row items-center gap-6 grow">
+        <img src="img/flag.png" class="h-12 w-12 rounded-full bg-white" />
+        <h1 id="pageTitle" class="m-0 text-2xl font-semibold text-white">踩地雷</h1>
+      </div>
+    </nav>
+
+    <div id="content" class="flex flex-row grow">
+      <div id="drawer" class="fixed top-0 left-0 z-10 md:relative md:z-0 w-full md:w-[30vw] h-full md:h-auto bg-[rgba(107,_114,_128,_0.6)]" hidden>
+        <div class="w-min h-full flex flex-col z-10 p-6 gap-4 bg-white">
+          <div>
+            <button id="drawerClose" class="btn-icon md:hidden">
+              <img src="img/icon/menu_open_black.svg"/>
+            </button>
+          </div>
+          <div id="options" class="grow">
+            <div id="optionGame" class="drawerSelected">
+              <img src="img/icon/play.svg" />
+              <span>遊戲</span>
+            </div>
+            <div id="optionSettings">
+              <img src="img/icon/settings.svg" />
+              <span>設定</span>
+            </div>
+            <div id="optionAbout">  
+              <img src="img/icon/info.svg" />
+              <span>關於</span>
+            </div>
+          </div>
+          <div id="languageSelector" class="flex">
+            <button id="langZH" class="btn-outline" hidden>中文</button>
+            <button id="langEN" class="btn-outline">Switch to English</button>
+          </div>
         </div>
       </div>
-      <div id="navigation" class="flex flex-row items-center justify-center w-full" hidden>
-        <h3 id="currentSection" class="py-4 grow"></h3>
-        <button id="returnToMenu">
-          <img src="img/icon/back.svg" />
-        </button>
-      </div>
-    </div>
-    
-    <div id="menu" hidden>
-      <button id="optionStartGame" class="primary">
-	      <img src="img/icon/play.svg" />開始遊戲</button>
-      <button id="optionSettings">
-        <img src="img/icon/settings.svg" />設定
-      </button>
-      <button id="optionAbout">
-        <img src="img/icon/info.svg" />關於
-      </button>
-    </div>
-    
-    <div id="settings" hidden>
-      <div>
-        <h3>語言</h3>
-        <div>
-          <button id="lang_zh" class="selected">中文</button>
-          <button id="lang_en">English</button>
-        </div>
-      </div>
-      <div>
-        <h3>遊戲難度</h3>
-        <div>
-          <button id="difficultyEasy">
-            <span>簡單</span>
-            <span>❤️<sup> 4</sup></span>
+      
+      <div id="mainScreen">
+        <div class="flex flex-col gap-4">
+          <button id="startGame" class="btn-primary">
+            <img src="img/icon/add.svg" />
+            <span>開新遊戲</span>
           </button>
-          <button id="difficultyHard">
-            <span>困難</span>
-            <span>❤️<sup> 2</sup></span>
-          </button>
-          <button id="difficultyExtreme">
-            <span>餓「死」</span>
-            <span>❤️<sup> 1</sup></span>
+          <button class="btn-secondary" hidden>
+            <img src="img/icon/open.svg" />
+            <span>繼續遊戲</span>
           </button>
         </div>
       </div>
-    </div>
-    
-    <div id="about" hidden>
-      <button id="optionIntroduction">玩法</button>
-      <button id="optionDeveloper">開發人員資訊</button>
-      <button id="optionCopyright">版權資訊</button>
-    </div>
-  </div>
-
-  <div id="introductionScreen" hidden>
-    <nav>
-      <h3 class="grow">遊戲玩法</h3>
-      <button class="returnToAbout">
-        <img src="img/icon/back.svg" />
-      </button>
-    </nav>
-    <p>遊戲開局中有個棋盤上散佈一些隱藏的地雷，需要在不踏上地雷之下翻開棋盤。</p>
-    <p>標記旗幟符號＝認為地雷在這格之上</p>
-    <p>點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【餓死版本】圖則為注意附近有雷</p>
-    <p>只要點到地雷就會扣減一顆紅心</p>
-  </div>
-
-  <div id="developerScreen" hidden>
-    <nav>
-      <h3 class="grow">開發人員資訊</h3>
-      <button class="returnToAbout">
-        <img src="img/icon/back.svg" />
-      </button>
-    </nav>
-    <div>
-      <div>
-        <img src="img/dev/it9.jpg"/>
-        <div>
-          <h4>隊長</h4>
-          <p>馬天禮</p>
-          <p>東華三院盧幹庭紀念中學</p>
+      
+      <div id="gameScreen" hidden>
+        <img id="background" class="bg-slate-200"/>
+        <div id="gameStatus">
+          <div>
+            <span id="difficulty"></span>
+          </div>
+          <div>
+            <span></span>
+            <span id="remainingHealth"></span>
+          </div>
+          <div>
+            <span></span>
+            <span>🚩<sup id="remainingFlags"></sup></span>
+          </div>
+          <div>
+            <span></span>
+            <span>💣<sup id="remainingMines"></sup></span>
+          </div>
+        </div>
+        <span id="timeCount">時間尚餘: 1:00</span>
+        <div id="gameBoard" class="grid items-center gap-4"></div>
+        <div class="flex gap-6 justify-evenly">
+          <button id="exit" class="btn-secondary">退出</button>
+          <div class="flex">
+            <button id="mode_flag" class="btn-secondary rounded-tr-none rounded-br-none">🚩 插旗</button>
+            <button id="mode_mine" class="btn-secondary rounded-tl-none rounded-bl-none">💣 踩彈</button>
+          </div>
         </div>
       </div>
-      <div>
-        <img src="img/dev/snow_cho.jpg"/>
+      
+      <div id="settingsScreen" hidden>
         <div>
-          <h4>介面設計</h4>
-          <p>曹雪</p>
-          <p>青年會書院</p>
+          <h3>遊戲難度</h3>
+          <div>
+            <button id="difficultyEasy" class="btn-secondary">
+              <span>簡單</span>
+              <span>❤️<sup> 4</sup></span>
+            </button>
+            <button id="difficultyHard" class="btn-secondary">
+              <span>困難</span>
+              <span>❤️<sup> 2</sup></span>
+            </button>
+            <button id="difficultyExtreme" class="btn-secondary">
+              <span>餓「死」</span>
+              <span>❤️<sup> 1</sup></span>
+            </button>
+          </div>
         </div>
       </div>
-      <div>
-        <img src="img/dev/namchoson.jpeg"/></img>
-        <div>
-          <h4>演算法設計</h4>
-          <p>陳文軒</p>
-          <p>五旬節聖潔會永光書院</p>
-        </div>
+      
+      <div id="aboutScreen" hidden>
+        <section>
+          <h2>玩法</h2>
+          <div>
+            <p>遊戲開局中有個棋盤上散佈一些隱藏的地雷，需要在不踏上地雷之下翻開棋盤。</p>
+            <p>標記旗幟符號＝認為地雷在這格之上</p>
+            <br>
+            <p>點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【餓死版本】圖則為注意附近有雷</p>
+            <p>只要點到地雷就會扣減一顆紅心</p>
+          </div>
+        </section>
+        <section>
+          <h2>開發人員資訊</h2>
+          <div id="developer">
+            <div>
+              <img src="img/dev/it9.jpg"/>
+              <div>
+                <h4>隊長</h4>
+                <p>馬天禮</p>
+                <p>東華三院盧幹庭紀念中學</p>
+              </div>
+            </div>
+            <div>
+              <img src="img/dev/snow_cho.jpg"/>
+              <div>
+                <h4>介面設計</h4>
+                <p>曹雪</p>
+                <p>青年會書院</p>
+              </div>
+            </div>
+            <div>
+              <img src="img/dev/namchoson.jpeg"/></img>
+              <div>
+                <h4>演算法設計</h4>
+                <p>陳文軒</p>
+                <p>五旬節聖潔會永光書院</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>版權資訊</h2>
+          <div id="copyright">
+            <div>
+              <p>餓死難度爲偶像夢幻祭的同人遊戲，若有侵犯版權定必跟進。</p>
+              <p>遊戲中圖片取自 偶像夢幻祭官方 Line 貼圖組</p>
+              <p>音效取自以下 Bilibili 影片。</p>
+              <div>
+                <div>
+                  <img src="img/icon/music.svg" />
+                  <a href="https://www.bilibili.com/video/BV1y14y197SX/?share_source=copy_web">【长达55s的好日和——☆（好日和语音合集）】其中一個</a>
+                </div>
+                <div>
+                  <img src="img/icon/music.svg" />
+                  <a href="https://www.bilibili.com/video/BV1kU4y1h7KU/?share_source=copy_web">【来听巽哥给梅露应援】00:50～00:57</a>
+                </div>
+                <div>
+                  <img src="img/icon/music.svg" />
+                  <a href ="https://www.bilibili.com/video/BV1Ph4y117ch/?share_source=copy_web">【谢谢，咔咔咔很洗脑（咔咔咔和non的合集）】00:18</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
-  </div>
-
-  <div id="copyrightScreen" hidden>
-    <nav>
-      <h3 class="grow">版權聲明</h3>
-      <button class="returnToAbout">
-        <img src="img/icon/back.svg" />
-      </button>
-    </nav>
-    <p>本遊戲爲 偶像夢幻祭 的同人遊戲，僅供玩樂。遊戲內容若有侵犯版權，定必跟進。</p>
-    <p>遊戲中圖片取自 偶像夢幻祭官方 Line 貼圖組。</p>
-    <p>遊戲音效取自以下 Bilibili 影片。</p>
-    <ul>
-      <li><a href="https://www.bilibili.com/video/BV1TG41147Gi/?share_source=copy_web">【影片美伽的65种猫猫叫语气词【偶像梦幻祭/ES】小咪是猫猫实锤！】00:42～00:43</a></li>
-      <li><a href="https://www.bilibili.com/video/BV1y14y197SX/?share_source=copy_web">【长达55s的好日和——☆（好日和语音合集）】其中一個</a></li>
-      <li><a href="https://www.bilibili.com/video/BV1kU4y1h7KU/?share_source=copy_web">【来听巽哥给梅露应援】00:50～00:57</a></li>  
-      <li><a href ="https://www.bilibili.com/video/BV1Ph4y117ch/?share_source=copy_web">【谢谢，咔咔咔很洗脑（咔咔咔和non的合集）】00:18</a></li>
-    </ul>
-  </div>
-
-  <div id="gameScreen" hidden>
-    <div class="gameStatus">
-      <div>
-        <span>難度</span>
-        <span id="difficulty"></span>
-      </div>
-      <div>
-        <span></span>
-        <span id="remainingHealth"></span>
-      </div>
-      <div>
-        <span></span>
-        <span>🚩<sup id="remainingFlags"></sup></span>
-      </div>
-      <div>
-        <span></span>
-        <span>💣<sup id="remainingMines"></sup></span>
-      </div>
-    </div>
-    <div class="md:row-span-2 flex flex-col items-center gap-4">
-      <span id="timeCount">時間尚餘: 1:00</span>
-      <div id="gameBoard" class="grid grid-cols-4 gap-4"></div>
-    </div>
-    <div class="flex gap-6 justify-evenly">
-      <button id="exit">退出</button>
-      <div class="flex">
-        <button id="mode_flag" class="rounded-tl-lg rounded-bl-lg rounded-none">🚩 插旗</button>
-        <button id="mode_mine" class="rounded-tr-lg rounded-br-lg rounded-none">💣 踩彈</button>
-      </div>
-    </div>
-  </div>
+  </div>  
 </body>
 
 </html>

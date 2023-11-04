@@ -1,0 +1,45 @@
+#aboutScreen {
+  @apply gap-12;
+}
+
+#aboutScreen h2 {
+  @apply text-3xl font-semibold;
+}
+
+#aboutScreen > section {
+  @apply flex flex-col gap-4;
+}
+
+#developer {
+  @apply flex flex-wrap gap-6;
+}
+
+#developer h4 {
+  @apply font-semibold;
+}
+
+#developer > div {
+  @apply flex items-center gap-6 px-6 py-4 bg-sky-200 rounded-xl shadow-md opacity-80;
+}
+
+#developer > div img {
+  @apply h-16 w-16 rounded-full;
+}
+
+#introduction,
+#copyright {
+  @apply flex flex-col gap-6;
+}
+
+#introduction > div,
+#copyright > div {
+  @apply flex flex-col gap-6;
+}
+
+#copyright > div > div {
+  @apply flex flex-col gap-4;
+}
+
+#copyright > div > div > div {
+  @apply flex items-center px-6 py-4 gap-6 bg-sky-200 rounded-xl shadow-md hover:shadow-lg;
+}

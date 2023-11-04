@@ -1,16 +1,20 @@
-var language = 1;
+export { ininitalizeLanguage };
+
+var stringList;
 
 const stringList_tc = {
+  appName: '踩地雷',
+  gameplay: '遊戲',
+  settings: '設定',
+  aboutUs: '關於',
+
   back_to_home: '返回主頁',
   start_game: '開始遊戲',
-  settings: '遊戲設定',
   language: '語言',
   difficulty: '遊戲難度',
   difficulty_easy: '簡單',
   difficulty_hard: '困難',
   difficulty_extreme: '餓「死」',
-  
-  about_us: '關於我們',
   
   developer: '開發者',
   dev_1: '馬天禮',
@@ -20,7 +24,7 @@ const stringList_tc = {
   dev_3: '陳文軒',
   dev_3_info: '五旬節聖潔會永光書院',
   
-  gameplay: '遊戲玩法',
+  gameplay: '玩法',
   gameplay_1: '遊戲開局中有個棋盤上散佈一些隱藏的地雷，需要在不踏上地雷之下翻開棋盤。',
   gameplay_2: '標記旗幟符號＝認為地雷在這格之上',
   gameplay_3: '點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【餓死版本】圖則為注意附近有雷',
@@ -38,9 +42,14 @@ const stringList_tc = {
   exit: '退出',
   flag: '🚩 旗插',
   boom: '💣 Oh Yeah!!!!',
-}
+};
 
 const stringList_en = {
+  appName: 'Minesweeper',
+  gameplay: 'Gameplay',
+  settings: 'Settings',
+  aboutUs: 'About Us',
+
   back_to_home: 'Back To Home',
   start_game: 'Start Games',
   settings: 'Game Settings',
@@ -59,14 +68,12 @@ const stringList_en = {
   dev_2_info: 'Chinese YMCA College',
   dev_3: 'Chan Man Hin,Lucas',
   dev_3_info: 'P.H.C Wing Kwong College',
- 
-  gameplay: 'GamePlay',
+  
   gameplay_1: 'At the beginning of the game, there are some hidden mines scattered on the board. You need to open the board without stepping on the mines.',
   gameplay_2: 'Mark Flag Symbol = The mine is considered to be on this square',
   gameplay_3: '點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【Ensemble Stars!】圖則為注意附近有雷',
   gameplay_4: '只要點到地雷就會扣減一顆紅心',
   
- 
   copyright: 'Copyright',
   copyright_info: 'This game is a fan game of Ensemble Stars! and is for fun only. If the game content infringes copyright, it will be modified.',
   image_src: 'The pictures in the game are taken from the official Line sticker sets of Ensemble Stars!.',
@@ -79,9 +86,17 @@ const stringList_en = {
   exit: 'Exit',
   flag: '🚩 Flag',
   boom: '💣 Bomb'
-}
+};
 
-
+const ininitalizeLanguage = (languageCode) => {
+  if (languageCode == 0) {
+    stringList = stringList_tc;
+  } else {
+    stringList = stringList_en;
+  }
+  
+  return stringList;
+};
 
 function languageOptions() {
   if (language == 0) {
@@ -123,4 +138,4 @@ function languageOptions() {
   document.querySelector('#exit').textContent = stringList.exit;
   document.querySelector('#mode_flag').textContent = stringList.flag;
   documnet.quertSelector('#mode_mine').textContent = stringList.boom;
-}
+};

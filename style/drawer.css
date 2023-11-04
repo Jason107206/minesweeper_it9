@@ -1,0 +1,15 @@
+#drawer #options > div {
+	@apply flex w-max p-8 gap-6 rounded-full transition;
+}
+
+#drawer #options > div.drawerSelected {
+	@apply bg-sky-400;
+}
+
+#drawer #options > div.drawerSelected {
+	@apply bg-sky-400;
+}
+
+#drawer #languageSelector > button {
+	@apply w-max;
+}

@@ -1,19 +1,19 @@
-#settings > div {
+#settingsScreen > div {
   @apply flex flex-col gap-4;
 }
 
-#settings > div > div {
+#settingsScreen > div > div {
   @apply flex flex-col md:flex-row;
 }
 
-#settings > div > div button {
+#settingsScreen > div > div button {
   @apply rounded-none;
 }
 
-#settings > div > div button:first-of-type {
+#settingsScreen > div > div button:first-of-type {
   @apply rounded-tl-lg rounded-tr-lg md:rounded-tr-none md:rounded-bl-lg;
 }
 
-#settings > div > div button:last-of-type {
+#settingsScreen > div > div button:last-of-type {
   @apply rounded-br-lg rounded-bl-lg md:rounded-bl-none md:rounded-tr-lg;
 }
