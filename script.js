@@ -10,6 +10,12 @@ var initialData = {
   mines: 4
 };
 
+if (localStorage.getItem('difficulty') !== 'undefined') {
+  initialData.difficulty = localStorage.getItem('difficulty');
+  initialData.mines = difficulty == 2 ? 2 : 4;
+  initialData.healthPoint = difficulty == 0 ? 4 : difficulty == 1 ? 2 : 1;
+}
+
 var stringList = initalizeLanguage(0);
 
 const initializeSettings = () => {
@@ -19,7 +25,9 @@ const initializeSettings = () => {
     }
     
     document.querySelector(x).onclick = () => {
+      localStorage.setItem('difficulty', i);
       initialData.difficulty = i;
+      initialData.mines = i == 2 ? 2 : 4;
       initialData.healthPoint = i == 0 ? 4 : i == 1 ? 2 : 1;
       document.querySelector(x).classList.add('btn-selected');
       document.querySelector(a[i == 0 ? 1 : 0]).classList.remove('btn-selected');
@@ -87,6 +95,10 @@ window.onload = async () => {
   
   document.querySelector('#startGame').onclick = async () => {
     initializeGame(initialData);
+    if (isDrawerOpened) {
+      hideElement('#drawer', 0);
+      isDrawerOpened = 0;
+    }
     
     await hideElement('#mainScreen', 1);
     await showElement('#gameScreen', 0);
