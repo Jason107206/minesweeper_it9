@@ -96,7 +96,7 @@ const initializeGame = async (gameData, language) => {
       });
       initialEmpty = [...new Set(filteredEmpty)];
     }
-    
+
     initialEmpty.map(x => {
       let [targetX, targetY] = x.split('_');
       targetX = +targetX;
@@ -204,8 +204,7 @@ const initializeGame = async (gameData, language) => {
   });
   
   let coordOfMines;
-  //coordOfMines = generateMines(gameData.mines);
-  coordOfMines = ['0_0', '0_1', '1_0', '1_1'];
+  coordOfMines = generateMines(gameData.mines);
   unrevealedMines = coordOfMines;
   
   for (let currentIndex = 0; currentIndex < gameData.columns * gameData.rows; currentIndex++) {
