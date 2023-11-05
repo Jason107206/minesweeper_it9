@@ -112,7 +112,15 @@ const initializeGame = async (gameData, language) => {
     });
   };
 
-  const returnMenu = async () => {
+  const returnMenu = async (lastGameResult) => {
+    if (typeof lastGameResult == 'object') {
+      console.log(lastGameResult.isWon);
+      let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.win : stringList.lost}`;
+      document.querySelector('#lastGame').textContent = lastGameStatus;
+    } else {
+      document.querySelector('#lastGame').textContent = stringList.noLastGame;
+    }
+
     await hideElement('#gameScreen', 1);
     await showElement('#mainScreen', 0);
     await fadeElement('#drawerOpen', 0, 1);
@@ -147,7 +155,7 @@ const initializeGame = async (gameData, language) => {
       
       localStorage.setItem('lastGameResult',  JSON.stringify(gameResult));
       
-      await returnMenu();
+      await returnMenu(gameResult);
     }, 1000);
   };
 
@@ -245,6 +253,7 @@ const initializeGame = async (gameData, language) => {
             if (checkMine(coordOfMines, currentX, currentY) == 1) {
               healthPoint--;
               countOfMine--;
+              unrevealedMines = unrevealedMines.filter(x => x != `${currentX}_${currentY}`);
 
               if (gameData.difficulty == 2) {
                 tile.style.backgroundImage = 'url(img/boom.png)';

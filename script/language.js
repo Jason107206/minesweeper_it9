@@ -189,8 +189,8 @@ function changeLanguage(language, pageIndex, lastGameResult) {
     document.querySelector(`#copyright > div > p:nth-of-type(${i})`).textContent = stringList.copyrightContent[i - 1];
   }
 
-  if (lastGameResult.length > 0) {
-    let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.won : stringList.lost}`;
+  if (typeof lastGameResult == 'object') {
+    let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.win : stringList.lost}`;
     document.querySelector('#lastGame').textContent = lastGameStatus;
   } else {
     document.querySelector('#lastGame').textContent = stringList.noLastGame;

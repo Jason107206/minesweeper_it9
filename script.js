@@ -125,10 +125,10 @@ window.onload = async () => {
     changeLanguage(language, pageIndex, lastGameResult);
   }
 
-  if (lastGameResult.length > 0) {
-    let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.won : stringList.lost}`;
+  if (typeof lastGameResult == 'object') {
+    let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.win : stringList.lost}`;
     document.querySelector('#lastGame').textContent = lastGameStatus;
   } else {
     document.querySelector('#lastGame').textContent = stringList.noLastGame;
   }
-};
+}
