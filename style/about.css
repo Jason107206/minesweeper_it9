@@ -6,6 +6,11 @@
   @apply flex flex-col gap-4;
 }
 
+#aboutScreen a,
+#aboutScreen p {
+  @apply text-lg;
+}
+
 #developer {
   @apply flex flex-wrap gap-6;
 }

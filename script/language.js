@@ -190,7 +190,7 @@ function changeLanguage(language, pageIndex, lastGameResult) {
 
   document.querySelector('#startGame > span').textContent = stringList.startGame;
   
-  document.querySelector('#timeContainer > span:first-of-type').textContent = stringList.startGame;
+  document.querySelector('#timeContainer > span:first-of-type').textContent = stringList.timeLeft;
   document.querySelector('#exit').textContent = stringList.leave;
   document.querySelector('#modeFlag').textContent = stringList.modeFlag;
   document.querySelector('#modeMine').textContent = stringList.modeMine;

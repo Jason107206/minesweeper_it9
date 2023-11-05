@@ -135,23 +135,25 @@ const initializeGame = async (gameData, language) => {
     });
 
     healthPoint -= unrevealedMines.length;
-    if (healthPoint > 0) {
-      alert('You won the game.');
-    } else {
-      healthPoint = 0;
-      alert('You lose the game.');
-    }
-
-    let gameResult = {
-      unrevealedMines: unrevealedMines.length,
-      wronglyFlagged: wronglyFlagged,
-      healthPoint: healthPoint,
-      isWon: healthPoint > 0 ? '1' : '0'
-    };
-
-    localStorage.setItem('lastGameResult',  JSON.stringify(gameResult));
-    
-    await returnMenu();
+    await setTimeout(async () => {
+      if (healthPoint > 0) {
+        alert('You won the game.');
+      } else {
+        healthPoint = 0;
+        alert('You lose the game.');
+      }
+      
+      let gameResult = {
+        unrevealedMines: unrevealedMines.length,
+        wronglyFlagged: wronglyFlagged,
+        healthPoint: healthPoint,
+        isWon: healthPoint > 0 ? '1' : '0'
+      };
+      
+      localStorage.setItem('lastGameResult',  JSON.stringify(gameResult));
+      
+      await returnMenu();
+    }, 500);
   };
 
   document.querySelector('#gameBoard').innerHTML = '';

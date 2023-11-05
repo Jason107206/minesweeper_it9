@@ -39,7 +39,7 @@
   .btn-secondary,
   .btn-outline,
   .btn-icon {
-    @apply gap-4 p-4 rounded-full active:bg-gray-300 opacity-90;
+    @apply gap-4 p-4 rounded-full text-lg active:bg-gray-300 opacity-90;
   }
 
   .btn-primary,
@@ -77,7 +77,7 @@
   }
 
   body {
-    @apply relative m-0 bg-gray-500;
+    @apply relative m-0 bg-gray-500 font-serif;
   }
 
   #background {
