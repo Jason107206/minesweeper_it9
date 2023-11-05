@@ -143,10 +143,10 @@ const initializeGame = async (gameData, language) => {
     alert(healthPoint);
     await setTimeout(async () => {
       if (healthPoint > 0) {
-        alert('You won the game.');
+        alert(stringList.winMessage);
       } else {
         healthPoint = 0;
-        alert('You lose the game.');
+        alert(stringList.loseMessage);
       }
       
       let gameResult = {
