@@ -1252,12 +1252,12 @@ button {
   height: 100%;
 }
 
-.w-12 {
-  width: 3rem;
+.\!w-auto {
+  width: auto !important;
 }
 
-.w-auto {
-  width: auto;
+.w-12 {
+  width: 3rem;
 }
 
 .w-full {
