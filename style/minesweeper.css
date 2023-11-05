@@ -2,13 +2,8 @@
 	@apply flex flex-col items-center justify-evenly box-border p-8;
 }
 
-
 #gameScreen > div {
 	@apply w-[80vw] md:w-auto;
-}
-
-#gameScreen button {
-  @apply w-24;
 }
 
 #gameBoard > span {

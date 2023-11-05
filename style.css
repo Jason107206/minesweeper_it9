@@ -207,10 +207,6 @@
   }
 }
 
-#gameScreen button {
-  width: 6rem;
-}
-
 #gameBoard > span {
   display: flex;
   height: 5rem;
