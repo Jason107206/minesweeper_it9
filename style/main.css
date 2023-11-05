@@ -77,7 +77,7 @@
   }
 
   body {
-    @apply relative m-0 bg-gray-500 font-serif;
+    @apply relative m-0 bg-gray-500 font-serif overflow-x-hidden;
   }
 
   #background {

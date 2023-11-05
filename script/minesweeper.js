@@ -114,7 +114,6 @@ const initializeGame = async (gameData, language) => {
 
   const returnMenu = async (lastGameResult) => {
     if (typeof lastGameResult == 'object') {
-      console.log(lastGameResult.isWon);
       let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.win : stringList.lost}`;
       document.querySelector('#lastGame').textContent = lastGameStatus;
     } else {

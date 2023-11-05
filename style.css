@@ -2873,6 +2873,7 @@ html,
 body {
   position: relative;
   margin: 0px;
+  overflow-x: hidden;
   --tw-bg-opacity: 1;
   background-color: rgb(107 114 128 / var(--tw-bg-opacity));
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
