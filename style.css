@@ -2864,6 +2864,8 @@ html,
 body {
   position: relative;
   margin: 0px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 #background {
@@ -2967,6 +2969,14 @@ button, .card.button {
 
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:rounded-br-none {
+    border-bottom-right-radius: 0px;
+  }
+
+  .md\:rounded-tr-none {
+    border-top-right-radius: 0px;
   }
 }
 
