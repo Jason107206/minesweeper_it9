@@ -1,4 +1,4 @@
-export { initalizeLanguage };
+export { initalizeLanguage, changeLanguage };
 
 const stringList_tc = {
   appName: '踩地雷',
@@ -9,40 +9,58 @@ const stringList_tc = {
   leave: '退出',
   sure: '確定？',
 
-  back_to_home: '返回主頁',
-  start_game: '開始遊戲',
-  language: '語言',
+  lastGameResult: '上次遊戲：',
+  win: '勝利',
+  lost: '落敗',
+  noLastGame: '請開始遊戲',
+
   difficulty: '遊戲難度',
-  difficulty_easy: '簡單',
-  difficulty_hard: '困難',
-  difficulty_extreme: '餓「死」',
+  easy: '簡單',
+  hard: '困難',
+  extreme: '餓「死」',
+
+  howToPlay: '玩法',
+  howToPlayContent: [
+    '遊戲開局時，棋盤中散佈著一些隱藏的地雷，你需要在不踏上地雷之下翻開格子。',
+    '在某格標記旗幟 ＝ 在這格認為地雷之下',
+    '點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【餓死版本】圖則為注意附近有雷',
+    '只要點到地雷就會扣減一顆紅心'
+  ],
+
+  developer: '開發人員資訊',
+  developerRoles: [
+    '隊長',
+    '介面設計',
+    '演算法設計'
+  ],
+  developerNames: [
+    '馬天禮',
+    '曹雪',
+    '陳文軒'
+  ],
+  developerSchools: [
+    '東華三院盧幹庭紀念中學',
+    '青年會書院',
+    '五旬節聖潔會永光書院'
+  ],
   
-  developer: '開發者',
-  dev_1: '馬天禮',
-  dev_1_info: '東華三院盧幹庭紀念中學',
-  dev_2: '曹雪',
-  dev_2_info: '青年會書院',
-  dev_3: '陳文軒',
-  dev_3_info: '五旬節聖潔會永光書院',
-  
-  gameplay: '玩法',
-  gameplay_1: '遊戲開局中有個棋盤上散佈一些隱藏的地雷，需要在不踏上地雷之下翻開棋盤。',
-  gameplay_2: '標記旗幟符號＝認為地雷在這格之上',
-  gameplay_3: '點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【餓死版本】圖則為注意附近有雷',
-  gameplay_4: '只要點到地雷就會扣減一顆紅心',
-  
-  copyright: '版權聲明',
-  copyright_info: '本遊戲爲 偶像夢幻祭 的同人遊戲，僅供玩樂。遊戲內容若有侵犯版權，定必修改。',
-  image_src: '遊戲中圖片取自 偶像夢幻祭官方 Line 貼圖組。',
-  audio_src: '音效來源',
-  sound_src: '遊戲音效取自以下 Bilibili 影片。',
+  copyright: '版權資訊',
+  copyrightContent: [
+    '餓死難度爲偶像夢幻祭的同人遊戲，僅供玩樂。若有侵犯版權請與我們聯絡。',
+    '遊戲中圖片取自 偶像夢幻祭官方 Line 貼圖組。',
+    '遊戲音效取自以下 Bilibili 影片。'
+  ],
+
+  startGame: '開新遊戲',
+  resumeGame: '繼續遊戲',
+
+  timeLeft: '時間尚餘:',
+  exit: '退出',
   
   previous: '前一個',
   next: '下一個',
-  time_left: '時間尚餘: ',
-  exit: '退出',
-  flag: '🚩 旗插',
-  boom: '💣 Oh Yeah!!!!',
+  modeFlag: '🚩 插旗',
+  modeMine: '💣 踩彈'
 };
 
 const stringList_en = {
@@ -54,42 +72,54 @@ const stringList_en = {
   leave: 'Leave',
   sure: 'Sure?',
 
-  back_to_home: 'Back To Home',
-  start_game: 'Start Games',
-  settings: 'Game Settings',
-  language: 'Language',
-  difficulty: 'Difficulty',
-  difficulty_easy: 'Easy',
-  difficulty_hard: 'Hard',
-  difficulty_extreme: 'Extreme',
-  time_left: 'time left',
-  extreme: 'Ensemble Stars!',
+  lastGameResult: 'Last Game:',
+  win: 'Won',
+  lost: 'Lost',
+  noLastGame: 'Please start a game',
 
-  about_us: 'Developer',
-  dev_1: 'Ma Tin Lai,Jason',
-  dev_1_info: 'Tung Wah Group of Hospitals Lo Kon Ting Memorial College',
-  dev_2: 'Cho Suet,Yuki',
-  dev_2_info: 'Chinese YMCA College',
-  dev_3: 'Chan Man Hin,Lucas',
-  dev_3_info: 'P.H.C Wing Kwong College',
+  difficulty: 'Difficulty',
+  easy: 'Easy',
+  hard: 'Hard',
+  extreme: 'Ensemble Stars!',
   
-  gameplay_1: 'At the beginning of the game, there are some hidden mines scattered on the board. You need to open the board without stepping on the mines.',
-  gameplay_2: 'Mark Flag Symbol = The mine is considered to be on this square',
-  gameplay_3: '點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【Ensemble Stars!】圖則為注意附近有雷',
-  gameplay_4: '只要點到地雷就會扣減一顆紅心',
+  howToPlay: 'How To Play',
+  howToPlayContent: [
+    'When the game start, scattered mines are hidden under tiles on the board. You need to reveal all the tiles without stepping on the mines.',
+    'Marking flag on tile = Considering a mine is under the tile',
+    'If the tile contains no mine, a number representing numbers of mines of nearby 8 tiles appear after revealing it. In "Ensemble Stars!" mode, only a figure will be shown.',
+    '1 health point will be deducted while stepping on a mine.'
+  ],
+
+  developer: 'Developers',
+  developerRoles: [
+    'Leader',
+    'UI designer',
+    'Algorithm designer'
+  ],
+  developerNames: [
+    'Ma Tin Lai, Jason',
+    'Cho Suet, Yuki',
+    'Chan Man Hin, Lucas'
+  ],
+  developerSchools: [
+    'Tung Wah Group of Hospitals Lo Kon Ting Memorial College',
+    'Chinese YMCA College',
+    'P.H.C. Wing Kwong College'
+  ],
   
-  copyright: 'Copyright',
-  copyright_info: 'This game is a fan game of Ensemble Stars! and is for fun only. If the game content infringes copyright, it will be modified.',
-  image_src: 'The pictures in the game are taken from the official Line sticker sets of Ensemble Stars!.',
-  audio_src: 'Sound Source:',
-  sound_src: 'The game sound effects are taken from the Bilibili video below.',
- 
-  previous: 'Previous',
-  next: 'Next',
-  time_left: 'Time Left: ',
-  exit: 'Exit',
-  flag: '🚩 Flag',
-  boom: '💣 Bomb'
+  copyright: 'Copyright Information',
+  copyrightContent: [
+    'The extreme mode is a fan art of "Ensemble Stars!" game and is for entertainment purpose only. Please do not hesitate to contact us if the game content infringes copyright.',
+    'In-game images are from the official Line sticker sets of Ensemble Stars!.',
+    'In-game sound effects are from the Bilibili video below.'
+  ],
+
+  startGame: 'Start a new game',
+  resumeGame: 'Resume game',
+
+  timeLeft: 'Time Left:',
+  modeFlag: '🚩 Flag',
+  modeMine: '💣 Mine'
 };
 
 const initalizeLanguage = (languageCode) => {
@@ -104,44 +134,64 @@ const initalizeLanguage = (languageCode) => {
   return stringList;
 };
 
-function languageOptions() {
+function changeLanguage(language, pageIndex, lastGameResult) {
+  let stringList;
+
   if (language == 0) {
     stringList = stringList_tc;
+    document.querySelector('#langTC').hidden = 1;
+    document.querySelector('#langEN').hidden = 0;
   } else {
     stringList = stringList_en;
+    document.querySelector('#langTC').hidden = 0;
+    document.querySelector('#langEN').hidden = 1;
   }
   
-  document.querySelector('#go_back_menu').textContent = stringList.back_to_home;
-  document.quertSelector('#option_settings').textContent = stringList.settings;
-  document.querySelector('#settings > h3:nth-child(2)').textContent = stringList.language;
-  document.querySelector('#option_game').textContent = stringList.start_game;
-  document.querySelector('#option_difficulty').textContent = stringList.difficulty;
-  document.querySelector('#mode_easy').textContent = stringList.difficulty_easy;
-  document.querySelector('#mode_hard').textContent = stringList.difficulty_hard;
-  document.querySelector('#mode_extreme').textContent = stringList.difficulty_extreme;
-  //(no id)document.querySelector('#option_time_left').textContent = stringList.time_left;
-  document.querySelector('#option_about').textContent = stringList.about_us;
-  document.querySelector('#developer > h3').textContent = stringList.developer;
-  document.querySelector('#setting > h3:nth-child(2)').textContent = stringList.dev_1;
-  document.querySelector('').textContent = stringList.dev_2;
-  document.querySelector('').textContent = stringList.dev_3;
-  document.querySelector('').textContent = stringList.dev_1_info;
-  document.querySelector('').textContent = stringList.dev_2_info;
-  document.querySelector('').textContent = stringList.dev_3_info;
-  document.querySelector('#how_to_play > h3').textContent = stringList.gameplay;
-  document.querySelector('#how_to_play > p:nth-child(1)').textContent = stringList.gameplay_1;
-  document.querySelector('#how_to_play > p:nth-child(2)').textContent = stringList.gameplay_2;
-  document.querySelector('#how_to_play > p:nth-child(3)').textContent = stringList.gameplay_3;
-  document.querySelector('#how_to_play > p:nth-child(4)').textContent = stringList.gameplay_4;
-  document.querySelector('#copyright > h3').textContent = stringList.copyright;
-  document.querySelector('#copyright > p:nth-child(1)').textContent = stringList.copyright_info;
-  document.querySelector('#copyright > p:nth-child(2)').textContent = stringList.image_src;
-  document.querySelector('#audio_source > h3').textContent = stringList.audio_src;
-  document.querySelector('#audio_source > p').textContent = stringList.sound_src;
-  document.querySelector('#about_previous').textContent = stringList.previous;
-  document.querySelector('#about_next').textContent = stringList.next;
-  document.querySelector('#timecount').textContent = stringList.time_left;
-  document.querySelector('#exit').textContent = stringList.exit;
-  document.querySelector('#mode_flag').textContent = stringList.flag;
-  documnet.quertSelector('#mode_mine').textContent = stringList.boom;
+  document.querySelector('#optionGame > span').textContent = stringList.gameplay;
+  document.querySelector('#optionSettings > span').textContent = stringList.settings;
+  document.querySelector('#optionAbout > span').textContent = stringList.aboutUs;
+
+  if (pageIndex == 0) {
+    document.querySelector('#pageTitle').textContent = stringList.appName;
+  } else if (pageIndex == 1) {
+    document.querySelector('#pageTitle').textContent = stringList.settings;
+  } else if (pageIndex == 2) {
+    document.querySelector('#pageTitle').textContent = stringList.aboutUs;
+  }
+
+  document.querySelector('#difficulty').textContent = stringList.difficulty;
+  document.querySelector('#difficultyEasy > span:nth-of-type(1)').textContent = stringList.easy;
+  document.querySelector('#difficultyHard > span:nth-of-type(1)').textContent = stringList.hard;
+  document.querySelector('#difficultyExtreme > span:nth-of-type(1)').textContent = stringList.extreme;
+
+  document.querySelector('#aboutScreen > section:nth-of-type(1) h2').textContent = stringList.howToPlay;
+  for (let i = 1; i <= 4; i++) {
+    document.querySelector(`#aboutScreen > section:nth-of-type(1) p:nth-of-type(${i})`).textContent = stringList.howToPlayContent[i - 1];
+  }
+
+  document.querySelector('#aboutScreen > section:nth-of-type(2) h2').textContent = stringList.developer;
+  for (let i = 1; i <= 3; i++) {
+    document.querySelector(`#developer > div:nth-of-type(${i}) h4:nth-of-type(1)`).textContent = stringList.developerRoles[i - 1];
+    document.querySelector(`#developer > div:nth-of-type(${i}) p:nth-of-type(1)`).textContent = stringList.developerNames[i - 1];
+    document.querySelector(`#developer > div:nth-of-type(${i}) p:nth-of-type(2)`).textContent = stringList.developerSchools[i - 1];
+  }
+
+  document.querySelector('#aboutScreen > section:nth-of-type(3) h2').textContent = stringList.developer;
+  for (let i = 1; i <= 3; i++) {
+    document.querySelector(`#copyright > div > p:nth-of-type(${i})`).textContent = stringList.copyrightContent[i - 1];
+  }
+
+  if (lastGameResult != []) {
+    let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.won : stringList.lost}`;
+    document.querySelector('#lastGame').textContent = lastGameStatus;
+  } else {
+    document.querySelector('#lastGame').textContent = stringList.noLastGame;
+  }
+
+  document.querySelector('#startGame > span').textContent = stringList.startGame;
+  
+  document.querySelector('#timeContainer > span:first-of-type').textContent = stringList.startGame;
+  document.querySelector('#exit').textContent = stringList.leave;
+  document.querySelector('#modeFlag').textContent = stringList.modeFlag;
+  document.querySelector('#modeMine').textContent = stringList.modeMine;
 };

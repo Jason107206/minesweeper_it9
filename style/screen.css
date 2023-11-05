@@ -1,7 +1,7 @@
 #mainScreen,
 #settingsScreen,
 #aboutScreen {
-	@apply w-full h-full p-8 gap-4 box-border;
+	@apply w-full h-full p-8 gap-4 box-border bg-sky-100;
 }
 
 #mainScreen {

@@ -22,10 +22,10 @@
     </nav>
 
     <div id="content" class="flex flex-row grow">
-      <div id="drawer" class="fixed top-0 left-0 z-10 md:relative md:z-0 w-full md:w-auto h-full bg-[rgba(107,_114,_128,_0.6)]" hidden>
-        <div class="w-min h-full flex flex-col z-10 p-6 gap-4 bg-gray-100">
+      <div id="drawer" class="fixed top-0 flex flex-row z-10 md:relative md:z-0 w-full md:w-auto h-full bg-[rgba(107,_114,_128,_0.6)]" hidden>
+        <div class="w-min h-full flex flex-col z-10 p-6 gap-4 bg-gray-100 rounded-tr-2xl rounded-br-2xl">
           <div>
-            <button id="drawerClose" class="btn-icon md:hidden">
+            <button class="drawerClose btn-icon md:hidden">
               <img src="img/icon/menu_open_black.svg"/>
             </button>
           </div>
@@ -44,10 +44,11 @@
             </div>
           </div>
           <div id="languageSelector" class="flex">
-            <button id="langZH" class="btn-outline" hidden>中文</button>
+            <button id="langTC" class="btn-outline" hidden>切換至中文</button>
             <button id="langEN" class="btn-outline">Switch to English</button>
           </div>
         </div>
+        <div class="drawerClose w-full h-full md:hidden"></div>
       </div>
       
       <div id="mainScreen">
@@ -58,10 +59,6 @@
           <button id="startGame" class="btn-primary">
             <img src="img/icon/add.svg" />
             <span>開新遊戲</span>
-          </button>
-          <button id="startGameDemo" class="btn-primary" hidden>
-            <img src="img/icon/add.svg" />
-            <span>示範</span>
           </button>
           <button class="btn-secondary" hidden>
             <img src="img/icon/open.svg" />
@@ -76,7 +73,7 @@
           <div class="flex flex-col gap-4">
             <div id="gameStatus">
               <div>
-                <span id="difficulty"></span>
+                <span id="currentDifficulty"></span>
               </div>
               <div>
                 <span></span>
@@ -101,15 +98,15 @@
         <div class="flex gap-6 justify-evenly">
           <button id="exit" class="btn-secondary">退出</button>
           <div class="flex">
-            <button id="mode_flag" class="btn-secondary rounded-tr-none rounded-br-none">🚩 插旗</button>
-            <button id="mode_mine" class="btn-secondary rounded-tl-none rounded-bl-none">💣 踩彈</button>
+            <button id="modeFlag" class="btn-secondary rounded-tr-none rounded-br-none w-fit">🚩 插旗</button>
+            <button id="modeMine" class="btn-secondary rounded-tl-none rounded-bl-none w-fit">💣 踩彈</button>
           </div>
         </div>
       </div>
       
       <div id="settingsScreen" hidden>
         <div>
-          <h3>遊戲難度</h3>
+          <h3 id="difficulty">遊戲難度</h3>
           <div>
             <button id="difficultyEasy" class="btn-secondary">
               <span>簡單</span>
@@ -132,7 +129,7 @@
           <h2>玩法</h2>
           <div>
             <p>遊戲開局中有個棋盤上散佈一些隱藏的地雷，需要在不踏上地雷之下翻開棋盤。</p>
-            <p>標記旗幟符號＝認為地雷在這格之上</p>
+            <p>標記旗幟符號 ＝ 認為地雷在這格之上</p>
             <br>
             <p>點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【餓死版本】圖則為注意附近有雷</p>
             <p>只要點到地雷就會扣減一顆紅心</p>
@@ -171,7 +168,7 @@
           <h2>版權資訊</h2>
           <div id="copyright">
             <div>
-              <p>餓死難度爲偶像夢幻祭的同人遊戲，若有侵犯版權定必跟進。</p>
+              <p>餓死難度爲偶像夢幻祭的同人遊戲，僅供玩樂。若有侵犯版權請與我們聯絡。</p>
               <p>遊戲中圖片取自 偶像夢幻祭官方 Line 貼圖組</p>
               <p>音效取自以下 Bilibili 影片。</p>
               <div>

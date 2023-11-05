@@ -1,22 +1,29 @@
-import { initalizeLanguage } from './script/language.js';
+import { initalizeLanguage, changeLanguage } from './script/language.js';
 import { hideElement, showElement, fadeElement } from './script/animation.js';
 import { initializeGame } from './script/minesweeper.js';
 
+var language = 0;
 var initialData = {
   rows: 4,
   columns: 4,
   difficulty: 0,
   healthPoint: 4,
-  mines: 4
+  mines: 4,
+  secondsAllowed: 420
 };
 
-if (localStorage.getItem('difficulty') !== 'undefined') {
+if (localStorage.getItem('difficulty') !== null) {
   initialData.difficulty = localStorage.getItem('difficulty');
   initialData.mines = difficulty == 2 ? 2 : 4;
   initialData.healthPoint = difficulty == 0 ? 4 : difficulty == 1 ? 2 : 1;
 }
 
-var stringList = initalizeLanguage(0);
+var lastGameResult = [];
+if (localStorage.getItem('lastGameResult') !== null) {
+  lastGameResult = JSON.parse(localStorage.getItem('lastGameResult'));
+}
+
+var stringList = initalizeLanguage(language);
 
 const initializeSettings = () => {
   ['#difficultyEasy', '#difficultyHard', '#difficultyExtreme'].map((x, i, a) => {
@@ -85,16 +92,18 @@ window.onload = async () => {
     }
     isDrawerOpened = +!isDrawerOpened;
   };
-
-  document.querySelector('#drawerClose').onclick = async () => {
-    document.querySelector('#drawerOpen > img').src = 'img/icon/menu.svg';
-    await hideElement('#drawer > div', 0);
-    hideElement('#drawer', 0, 0);
-    isDrawerOpened = 0;
-  };
+  
+  document.querySelectorAll('.drawerClose').forEach(x => {
+    x.onclick = async () => {
+      document.querySelector('#drawerOpen > img').src = 'img/icon/menu.svg';
+      await hideElement('#drawer > div', 0);
+      hideElement('#drawer', 0, 0);
+      isDrawerOpened = 0;
+    };
+  });
   
   document.querySelector('#startGame').onclick = async () => {
-    initializeGame(initialData);
+    initializeGame(initialData, language);
     if (isDrawerOpened) {
       hideElement('#drawer', 0);
       isDrawerOpened = 0;
@@ -104,10 +113,22 @@ window.onload = async () => {
     await showElement('#gameScreen', 0);
   }
   
-  document.querySelector('#startGameDemo').onclick = async () => {
-    initializeGame(initialData, 1);
-    
-    await hideElement('#mainScreen', 1);
-    await showElement('#gameScreen', 0);
+  document.querySelector('#langTC').onclick = async () => {
+    language = 0;
+    stringList = initalizeLanguage(language);
+    changeLanguage(language, pageIndex, lastGameResult);
+  }
+  
+  document.querySelector('#langEN').onclick = async () => {
+    language = 1;
+    stringList = initalizeLanguage(language);
+    changeLanguage(language, pageIndex, lastGameResult);
+  }
+
+  if (lastGameResult != []) {
+    let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.won : stringList.lost}`;
+    document.querySelector('#lastGame').textContent = lastGameStatus;
+  } else {
+    document.querySelector('#lastGame').textContent = stringList.noLastGame;
   }
 };
