@@ -24,7 +24,8 @@ const stringList_tc = {
     '遊戲開局時，棋盤中散佈著一些隱藏的地雷，你需要在不踏上地雷之下翻開格子。',
     '在某格標記旗幟 ＝ 在這格認為地雷之下',
     '點開小方塊後會顯示一個數字（代表著以它為中心的九宮格內藏著幾顆地雷）/【餓死版本】圖則為注意附近有雷',
-    '只要點到地雷就會扣減一顆紅心'
+    '只要點到地雷就會扣減一顆紅心',
+    '沒有地雷剩下、沒有生命值剩下、沒有旗子剩下、沒有空格剩下的話，遊戲即告完結。'
   ],
 
   developer: '開發人員資訊',
@@ -60,7 +61,10 @@ const stringList_tc = {
   previous: '前一個',
   next: '下一個',
   modeFlag: '🚩 插旗',
-  modeMine: '💣 踩彈'
+  modeMine: '💣 踩彈',
+
+  loseMessage: '抱歉，你輸了。',
+  winMessage: '恭喜，你贏了。'
 };
 
 const stringList_en = {
@@ -87,7 +91,8 @@ const stringList_en = {
     'When the game start, scattered mines are hidden under tiles on the board. You need to reveal all the tiles without stepping on the mines.',
     'Marking flag on tile = Considering a mine is under the tile',
     'If the tile contains no mine, a number representing numbers of mines of nearby 8 tiles appear after revealing it. In "Ensemble Stars!" mode, only a figure will be shown.',
-    '1 health point will be deducted while stepping on a mine.'
+    '1 health point will be deducted while stepping on a mine.',
+    'The game ends while there are no mines, no health points, no flags nor empty tiles left.'
   ],
 
   developer: 'Developers',
@@ -119,7 +124,10 @@ const stringList_en = {
 
   timeLeft: 'Time Left:',
   modeFlag: '🚩 Flag',
-  modeMine: '💣 Mine'
+  modeMine: '💣 Mine',
+
+  loseMessage: 'Sorry, you lose the game.',
+  winMessage: 'Congrats, you win the game.'
 };
 
 const initalizeLanguage = (languageCode) => {
@@ -165,7 +173,7 @@ function changeLanguage(language, pageIndex, lastGameResult) {
   document.querySelector('#difficultyExtreme > span:nth-of-type(1)').textContent = stringList.extreme;
 
   document.querySelector('#aboutScreen > section:nth-of-type(1) h2').textContent = stringList.howToPlay;
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 5; i++) {
     document.querySelector(`#aboutScreen > section:nth-of-type(1) p:nth-of-type(${i})`).textContent = stringList.howToPlayContent[i - 1];
   }
 

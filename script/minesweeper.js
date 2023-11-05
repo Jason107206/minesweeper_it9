@@ -96,24 +96,19 @@ const initializeGame = async (gameData, language) => {
       });
       initialEmpty = [...new Set(filteredEmpty)];
     }
-
+    
     initialEmpty.map(x => {
       let [targetX, targetY] = x.split('_');
       targetX = +targetX;
       targetY = +targetY;
-      if (
-        targetX != initialX &&
-        targetY != initialY
-      ) {
-        let tile = document.querySelector(`#tile_${targetX}_${targetY}`);
-        if (gameData.difficulty == 2) {
-          tile.style.backgroundImage = 'url(img/mind.png)';
-        } else {
-          tile.textContent = '0';
-        }
-        tile.classList.add('revealed');
-        countOfTile--;
+      let tile = document.querySelector(`#tile_${targetX}_${targetY}`);
+      if (gameData.difficulty == 2) {
+        tile.style.backgroundImage = 'url(img/mind.png)';
+      } else {
+        tile.textContent = '0';
       }
+      tile.classList.add('revealed');
+      countOfTile--;
     });
   };
 
@@ -153,7 +148,7 @@ const initializeGame = async (gameData, language) => {
       localStorage.setItem('lastGameResult',  JSON.stringify(gameResult));
       
       await returnMenu();
-    }, 500);
+    }, 1000);
   };
 
   document.querySelector('#gameBoard').innerHTML = '';
@@ -209,7 +204,8 @@ const initializeGame = async (gameData, language) => {
   });
   
   let coordOfMines;
-  coordOfMines = generateMines(gameData.mines);
+  //coordOfMines = generateMines(gameData.mines);
+  coordOfMines = ['0_0', '0_1', '1_0', '1_1'];
   unrevealedMines = coordOfMines;
   
   for (let currentIndex = 0; currentIndex < gameData.columns * gameData.rows; currentIndex++) {
