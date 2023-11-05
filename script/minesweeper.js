@@ -132,12 +132,15 @@ const initializeGame = async (gameData, language) => {
     let wronglyFlagged = 0;
     flaggedTiles.map(x => {
       if (!(coordOfMines.includes(x))) {
+        alert(x);
         healthPoint--;
         wronglyFlagged++;
       }
     });
-
+    alert(healthPoint);
+    
     healthPoint -= unrevealedMines.length;
+    alert(healthPoint);
     await setTimeout(async () => {
       if (healthPoint > 0) {
         alert('You won the game.');
