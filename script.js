@@ -125,7 +125,7 @@ window.onload = async () => {
     changeLanguage(language, pageIndex, lastGameResult);
   }
 
-  if (lastGameResult != []) {
+  if (lastGameResult.length > 0) {
     let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.won : stringList.lost}`;
     document.querySelector('#lastGame').textContent = lastGameStatus;
   } else {
