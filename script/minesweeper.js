@@ -141,23 +141,23 @@ const initializeGame = async (gameData, language) => {
     
     healthPoint -= unrevealedMines.length;
     alert(healthPoint);
-    await setTimeout(async () => {
+    setTimeout(async () => {
       if (healthPoint > 0) {
         alert(stringList.winMessage);
       } else {
         healthPoint = 0;
         alert(stringList.loseMessage);
       }
-      
+
       let gameResult = {
         unrevealedMines: unrevealedMines.length,
         wronglyFlagged: wronglyFlagged,
         healthPoint: healthPoint,
         isWon: healthPoint > 0 ? '1' : '0'
       };
-      
-      localStorage.setItem('lastGameResult',  JSON.stringify(gameResult));
-      
+
+      localStorage.setItem('lastGameResult', JSON.stringify(gameResult));
+
       await returnMenu(gameResult);
     }, 1000);
   };

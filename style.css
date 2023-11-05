@@ -1256,9 +1256,8 @@ button {
   width: 3rem;
 }
 
-.w-fit {
-  width: -moz-fit-content;
-  width: fit-content;
+.w-auto {
+  width: auto;
 }
 
 .w-full {
