@@ -294,6 +294,7 @@ const initializeGame = async (gameData, language) => {
   let countOfMine = gameData.mines;
   let countOfTile = gameData.columns * gameData.rows;
   let countOfFlag = countOfTile - gameData.mines;
+
   let flaggedTiles = [];
   let unrevealedMines = [];
   let countdownSeconds = gameData.secondsAllowed;
@@ -301,14 +302,14 @@ const initializeGame = async (gameData, language) => {
   let stringList = initalizeLanguage(language);
   
   const generateMines = () => {
-    let indexOfMine = [];
-    while (indexOfMine.length < countOfMine) {
+    let coordOfMines = []
+    for (let i = 0; i < countOfMine; i++) {
       let randomIndex = Math.floor(Math.random() * gameData.columns * gameData.rows);
-      if (!indexOfMine.includes(randomIndex)) {
-        indexOfMine.push(randomIndex);
+      let randomCoord = `${Math.floor(randomIndex / gameData.columns)}_${randomIndex % gameData.columns}`
+      if (!coordOfMines.includes(randomCoord)) {
+        coordOfMines.push(randomCoord);
       }
-    }
-    let coordOfMines = indexOfMine.map(x => `${Math.floor(x / gameData.columns)}_${x % gameData.columns}`);
+    };
     return coordOfMines;
   };
 
@@ -497,35 +498,47 @@ const initializeGame = async (gameData, language) => {
   let coordOfMines;
   coordOfMines = generateMines(gameData.mines);
   unrevealedMines = coordOfMines;
+
+  const toggleFlag = (tile, currentX, currentY, state) => {
+    if (state) {
+      tile.classList.add('flag');
+      tile.textContent = '🚩';
+      countOfFlag--;
+      countOfTile--;
+
+      if (coordOfMines.includes(`${currentX}_${currentY}`)) {
+        unrevealedMines = unrevealedMines.filter(x => x != `${currentX}_${currentY}`);
+      }
+      flaggedTiles.push(`${currentX}_${currentY}`);
+    } else {
+      tile.classList.remove('flag');
+      tile.textContent = 'ㅤ';
+      countOfFlag++;
+      countOfTile++;
+
+      flaggedTiles = flaggedTiles.filter(x => x != `${currentX}_${currentY}`);
+      if (`${currentX}_${currentY}` in coordOfMines) {
+        unrevealedMines.push(`${currentX}_${currentY}`);
+      }
+    }
+  };
   
   for (let currentIndex = 0; currentIndex < gameData.columns * gameData.rows; currentIndex++) {
     let currentX = (currentIndex / gameData.columns >> 0);
     let currentY = currentIndex % gameData.columns;
+
     let tile = document.createElement('span');
     tile.id = `tile_${currentX}_${currentY}`;
     tile.textContent = 'ㅤ';
     document.querySelector('#gameBoard').append(tile);
+
     tile.onclick = () => {
       if (!tile.classList.contains('revealed')) {
         if (clickMode == 0) {
-          if (!(tile.classList.contains('flag'))) {
-            tile.classList.add('flag');
-            tile.textContent = '🚩';
-            countOfFlag--;
-            countOfTile--;
-            if (coordOfMines.includes(`${currentX}_${currentY}`)) {
-              unrevealedMines = unrevealedMines.filter(x => x != `${currentX}_${currentY}`);
-            }
-            flaggedTiles.push(`${currentX}_${currentY}`);
+          if (!tile.classList.contains('flag')) {
+            toggleFlag(tile, currentX, currentY, true)
           } else {
-            tile.classList.remove('flag');
-            tile.textContent = 'ㅤ';
-            countOfFlag++;
-            countOfTile++;
-            flaggedTiles = flaggedTiles.filter(x => x != `${currentX}_${currentY}`);
-            if (`${currentX}_${currentY}` in coordOfMines) {
-              unrevealedMines.push(`${currentX}_${currentY}`);
-            }
+            toggleFlag(tile, currentX, currentY, false)
           }
           document.querySelector('#remainingFlags').textContent = countOfFlag;
         } else {
