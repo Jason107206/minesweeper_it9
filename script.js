@@ -1,23 +1,23 @@
 var language = 0;
 var stringList;
-var initialData = {
-  rows: 4,
-  columns: 4,
+var data = {
+  row: 4,
+  column: 4,
   difficulty: 0,
-  healthPoint: 4,
-  mines: 4,
-  secondsAllowed: 420
+  health_pt: 4,
+  mine: 4,
+  total_secs: 420
 };
 
 if (localStorage.getItem('difficulty') !== null) {
-  initialData.difficulty = localStorage.getItem('difficulty');
-  initialData.mines = difficulty == 2 ? 2 : 4;
-  initialData.healthPoint = difficulty == 0 ? 4 : difficulty == 1 ? 2 : 1;
+  data.difficulty = localStorage.getItem('difficulty');
+  data.mine = data.difficulty == 2 ? 2 : 4;
+  data.health_pt = data.difficulty == 0 ? 4 : data.difficulty == 1 ? 2 : 1;
 }
 
-var lastGameResult = [];
-if (localStorage.getItem('lastGameResult') !== null) {
-  lastGameResult = JSON.parse(localStorage.getItem('lastGameResult'));
+var last_game = [];
+if (localStorage.getItem('last_game') !== null) {
+  last_game = JSON.parse(localStorage.getItem('last_game'));
 }
 
 const hideElement = async (e, d, t = 800, w = 0) => {
@@ -91,10 +91,10 @@ const stringList_tc = {
   leave: '退出',
   sure: '確定？',
 
-  lastGameResult: '上次遊戲：',
+  last_game: '上次遊戲：',
   win: '勝利',
   lost: '落敗',
-  noLastGame: '請開始遊戲',
+  last_game_null: '請開始遊戲',
 
   difficulty: '遊戲難度',
   easy: '簡單',
@@ -158,10 +158,10 @@ const stringList_en = {
   leave: 'Leave',
   sure: 'Sure?',
 
-  lastGameResult: 'Last Game:',
+  last_game: 'Last Game:',
   win: 'Won',
   lost: 'Lost',
-  noLastGame: 'Please start a game',
+  last_game_null: 'Please start a game',
 
   difficulty: 'Difficulty',
   easy: 'Easy',
@@ -224,7 +224,7 @@ const initalizeLanguage = (languageCode) => {
   return stringList;
 };
 
-const changeLanguage =  (language, pageIndex, lastGameResult) => {
+const changeLanguage =  (language, pageIndex, last_game) => {
   let stringList;
 
   if (language == 0) {
@@ -271,11 +271,11 @@ const changeLanguage =  (language, pageIndex, lastGameResult) => {
     document.querySelector(`#copyright > div > p:nth-of-type(${i})`).textContent = stringList.copyrightContent[i - 1];
   }
 
-  if (typeof lastGameResult == 'object') {
-    let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.win : stringList.lost}`;
-    document.querySelector('#lastGame').textContent = lastGameStatus;
+  if (typeof last_game == 'object') {
+    let last_game_status = `${stringList.last_game} ${last_game.isWon == 1 ? stringList.win : stringList.lost}`;
+    document.querySelector('#lastGame').textContent = last_game_status;
   } else {
-    document.querySelector('#lastGame').textContent = stringList.noLastGame;
+    document.querySelector('#lastGame').textContent = stringList.last_game_null;
   }
 
   document.querySelector('#startGame > span').textContent = stringList.startGame;
@@ -286,123 +286,168 @@ const changeLanguage =  (language, pageIndex, lastGameResult) => {
   document.querySelector('#modeMine').textContent = stringList.modeMine;
 };
 
-const initializeGame = async (gameData, language) => {
-  let clickMode = 1;
-  let isConfirmedExit = 0;
+const initializeGame = async (data, language) => {
+  let is_game_in_progress = true;
+  let is_revealing = true;
+  let is_exit_confirmed = false;
 
-  let healthPoint = 0;
-  let countOfMine = gameData.mines;
-  let countOfTile = gameData.columns * gameData.rows;
-  let countOfFlag = countOfTile - gameData.mines;
-
-  let flaggedTiles = [];
-  let unrevealedMines = [];
-  let countdownSeconds = gameData.secondsAllowed;
-
+  let secs_left = data.total_secs;
   let stringList = initalizeLanguage(language);
-  
-  const generateMines = () => {
-    let coordOfMines = []
-    for (let i = 0; i < countOfMine; i++) {
-      let randomIndex = Math.floor(Math.random() * gameData.columns * gameData.rows);
-      let randomCoord = `${Math.floor(randomIndex / gameData.columns)}_${randomIndex % gameData.columns}`
-      if (!coordOfMines.includes(randomCoord)) {
-        coordOfMines.push(randomCoord);
+
+  let health_pt = 0;
+  let mine_left = data.mine;
+  let mine_unrevealed = data.mine;
+  let cell_count = data.column * data.row;
+  let cell_unrevealed = cell_count;
+  let flag_count = cell_count - data.mine;
+
+  let board = [];
+
+  const init_board = () => {
+    for (let row = 0; row < data.row; row++) {
+      board[row] = [];
+
+      for (let column = 0; column < data.column; column++) {
+        board[row][column] = {
+          is_mine: false,
+          revealed: false,
+          flagged: false,
+          near_mine: 0
+        };
+
+        let cell = document.createElement('span');
+        cell.id = `cell_${row}_${column}`;
+        cell.textContent = 'ㅤ';
+        document.querySelector('#gameBoard').append(cell);
+
+        cell.onclick = (() => {
+          if (!board[row][column].revealed) {
+            if (is_revealing) {
+              reveal_cell(row, column, cell);
+            } else {
+              toggle_cell_flag(row, column, cell);
+            }
+            render_counter();
+          }
+        });
       }
-    };
-    return coordOfMines;
-  };
-
-  const checkMine = (coordOfMines, currentX, currentY) => {
-    let isMine = 0;
-    if (coordOfMines.includes(`${currentX}_${currentY}`)) {
-      isMine = 1;
-    }
-    return isMine;
-  };
-
-  const getNearbyTiles = (initialX, initialY) => {
-    return [
-      [initialX - 1, initialY - 1],
-      [initialX - 1, initialY],
-      [initialX - 1, initialY + 1],
-      [initialX, initialY - 1],
-      [initialX, initialY + 1],
-      [initialX + 1, initialY - 1],
-      [initialX + 1, initialY],
-      [initialX + 1, initialY + 1],
-    ];
-  }
-
-  const countNearbyMines = (initialX, initialY) => {
-    let nearbyMinesCount = 0;
-    getNearbyTiles(initialX, initialY).map(x => {
-      if (
-        x[0] >= 0 && 
-        x[0] < gameData.columns && 
-        x[1] >= 0 && 
-        x[1] < gameData.rows &&
-        coordOfMines.includes(`${x[0]}_${x[1]}`)
-      ) {
-        nearbyMinesCount++;
-      }
-    });
-  
-    return nearbyMinesCount;
-  };
-
-  const filterNearbyEmptyTiles = (initialX, initialY) => {
-    let emptyTiles = [];
-    getNearbyTiles(initialX, initialY).map(x => {
-      if (
-        x[0] >= 0 && 
-        x[0] < gameData.columns && 
-        x[1] >= 0 && 
-        x[1] < gameData.rows &&
-        countNearbyMines(x[0], x[1]) == 0
-      ) {
-        emptyTiles.push(`${x[0]}_${x[1]}`);
-      }
-    });
-  
-    return emptyTiles;
-  }
-
-  const revealEmptyTiles = (initialX, initialY) => {
-    let initialEmpty = filterNearbyEmptyTiles(initialX, initialY);
-    let filteredEmpty = [];
-  
-    for (let i = 0; i < gameData.columns; i++) {
-      initialEmpty.map(x => {
-        let [targetX, targetY] = x.split('_');
-        targetX = +targetX;
-        targetY = +targetY;
-        filteredEmpty.push(...filterNearbyEmptyTiles(targetX, targetY));
-      });
-      initialEmpty = [...new Set(filteredEmpty)];
     }
 
-    initialEmpty.map(x => {
-      let [targetX, targetY] = x.split('_');
-      targetX = +targetX;
-      targetY = +targetY;
-      let tile = document.querySelector(`#tile_${targetX}_${targetY}`);
-      if (gameData.difficulty == 2) {
-        tile.style.backgroundImage = 'url(img/mind.png)';
+    let placed_mine = 0;
+    while (placed_mine < data.mine) {
+      let random_x = Math.floor(Math.random() * data.column);
+      let random_y = Math.floor(Math.random() * data.row);
+      let random_cell = board[random_x][random_y];
+
+      if(!random_cell.is_mine) {
+        random_cell.is_mine = true;
+        placed_mine++;
+
+        for (let near_x = random_x - 1; near_x <= random_x + 1; near_x++) {
+          for (let near_y = random_y - 1; near_y <= random_y + 1; near_y++) {
+            if (near_x >= 0 && near_x < data.column && near_y >= 0 && near_y < data.row) {
+              board[near_x][near_y].near_mine++;
+            }
+          }
+        }
+      }
+    }
+    console.log(board);
+  }
+
+  const reveal_cell = (row, column, cell) => {
+    if (!board[row][column].revealed) {
+      board[row][column].revealed = true;
+
+      if (board[row][column].is_mine) {
+        if (is_game_in_progress) {
+          if (data.difficulty == 2) {
+            cell.style.backgroundImage = 'url(img/boom.png)';
+          } else {
+            cell.textContent = '💥';
+            cell.classList.add('boom');
+          }
+        } else {
+          cell.textContent = '💣';
+        }
       } else {
-        tile.textContent = '0';
+        if (data.difficulty == 2) {
+          cell.style.backgroundImage = 'url(img/mind.png)';
+        } else {
+          cell.textContent = board[row][column].near_mine;
+        }
       }
-      tile.classList.add('revealed');
-      countOfTile--;
-    });
-  };
 
-  const returnMenu = async (lastGameResult) => {
-    if (typeof lastGameResult == 'object') {
-      let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.win : stringList.lost}`;
-      document.querySelector('#lastGame').textContent = lastGameStatus;
+      if (is_game_in_progress) {
+        cell_unrevealed--;
+
+        if (board[row][column].is_mine) {
+          if (health_pt == 1) {
+            terminate_game();
+          } else {
+            mine_unrevealed--;
+            mine_left--;
+            health_pt--;
+          }
+        } else {
+          if (board[row][column].near_mine == 0) {
+            for (let near_x = row - 1; near_x <= row + 1; near_x++) {
+              for (let near_y = column - 1; near_y <= column + 1; near_y++) {
+                if (near_x >= 0 && near_x < data.column && near_y >= 0 && near_y < data.row) {
+                  reveal_cell(near_x, near_y, document.querySelector(`#cell_${near_x}_${near_y}`));
+                }
+              }
+            }
+          }
+        }
+
+        if (mine_left == 0) {
+          terminate_game();
+        }
+      }
+    }
+  }
+
+  const toggle_cell_flag = (row, column, cell) => {
+    if (!board[row][column].revealed) {
+      if (board[row][column].flagged) {
+        cell.classList.remove('flag');
+        cell.textContent = 'ㅤ';
+        flag_count++;
+
+        if (board[row][column].is_mine) {
+          mine_left++;
+        }
+        board[row][column].flagged = false;
+      } else if (flag_count > 0) {
+        cell.classList.add('flag');
+        cell.textContent = '🚩';
+        flag_count--;
+
+        if (board[row][column].is_mine) {
+          mine_left--;
+        }
+        board[row][column].flagged = true;
+      }
+
+      if (mine_left == 0) {
+        terminate_game();
+      }
+    }
+  }
+
+  const render_counter = () => {
+    document.querySelector('#remainingHealth').textContent = '❤️'.repeat(health_pt);
+    document.querySelector('#remainingMines').textContent = mine_unrevealed;
+    document.querySelector('#remainingFlags').textContent = flag_count;
+  }
+
+  const return_to_menu = async (last_game) => {
+    if (typeof last_game == 'object') {
+      let last_game_status = `${stringList.last_game} ${last_game.isWon == 1 ? stringList.win : stringList.lost}`;
+      document.querySelector('#lastGame').textContent = last_game_status;
     } else {
-      document.querySelector('#lastGame').textContent = stringList.noLastGame;
+      document.querySelector('#lastGame').textContent = stringList.last_game_null;
     }
 
     await hideElement('#gameScreen', 1);
@@ -410,75 +455,77 @@ const initializeGame = async (gameData, language) => {
     await fadeElement('#drawerOpen', 0, 1);
   }
 
-  const terminateGame = async () => {
+  const terminate_game = async () => {
     clearInterval(countdown);
-    
-    let wronglyFlagged = 0;
-    flaggedTiles.map(x => {
-      if (!(coordOfMines.includes(x))) {
-        healthPoint--;
-        wronglyFlagged++;
+    is_game_in_progress = false;
+
+    for (let column = 0; column < data.column; column++) {
+      for (let row = 0; row < data.row; row++) {
+        if (board[row][column].flagged && !board[row][column].is_mine) {
+          health_pt--;
+        }
+
+        if (!board[row][column].flagged && !board[row][column].revealed && board[row][column].is_mine) {
+          health_pt--;
+        }
+        
+        if (!board[row][column].is_mine || !board[row][column].revealed) {
+          reveal_cell(row, column, document.querySelector(`#cell_${row}_${column}`));
+        }
       }
-    });
-    
-    healthPoint -= unrevealedMines.length;
+    }
+
     setTimeout(async () => {
-      if (healthPoint > 0) {
+      if (health_pt > 0) {
         alert(stringList.winMessage);
       } else {
-        healthPoint = 0;
         alert(stringList.loseMessage);
+        health_pt = 0;
       }
 
-      let gameResult = {
-        unrevealedMines: unrevealedMines.length,
-        wronglyFlagged: wronglyFlagged,
-        healthPoint: healthPoint,
-        isWon: healthPoint > 0 ? '1' : '0'
+      let game_result = {
+        health_pt: health_pt > 0 ? health_pt : 0,
+        isWon: health_pt > 0 ? '1' : '0'
       };
 
-      localStorage.setItem('lastGameResult', JSON.stringify(gameResult));
-
-      await returnMenu(gameResult);
+      localStorage.setItem('last_game', JSON.stringify(game_result));
+      await return_to_menu(game_result);
     }, 1000);
-  };
+
+  }
 
   document.querySelector('#gameBoard').innerHTML = '';
-  document.querySelector('#gameBoard').style.gridTemplateColumns = `repeat(${gameData.columns}, auto)`;
+  document.querySelector('#gameBoard').style.gridTemplateColumns = `repeat(${data.column}, auto)`;
+  fadeElement('#drawerOpen', 1, 0);
 
-  if (gameData.difficulty == 2) {
+  if (data.difficulty == 2) {
     document.querySelector('#background').style.backgroundImage = 'url("img/es_bg.jpeg")';
+    document.querySelector('#currentDifficulty').textContent = stringList.extreme;
+    health_pt = 1;
   } else {
     document.querySelector('#background').style.backgroundImage = 'url("img/bg.png")';
-  }
-  
-  if (gameData.difficulty == 0) {
-    healthPoint = 4;
-    document.querySelector('#currentDifficulty').textContent = stringList.easy;
-  } else if (gameData.difficulty == 1) {
-    healthPoint = 2;
-    document.querySelector('#currentDifficulty').textContent = stringList.hard;
-  } else {
-    healthPoint = 1;
-    document.querySelector('#currentDifficulty').textContent = stringList.extreme;
-  }
-  
-  document.querySelector('#remainingHealth').textContent = '❤️'.repeat(healthPoint);
-  document.querySelector('#remainingMines').textContent = countOfMine;
-  document.querySelector('#remainingFlags').textContent = countOfFlag;
+    if (data.difficulty == 1) {
+      document.querySelector('#currentDifficulty').textContent = stringList.hard;
+      health_pt = 2;
+    } else {
+      document.querySelector('#currentDifficulty').textContent = stringList.easy;
+      health_pt = 4;
+    }
+  };
 
-  fadeElement('#drawerOpen', 1, 0);
+  render_counter();
+
   document.querySelector('#exit').onclick = async () => {
-    if (isConfirmedExit == 1) {
+    if (is_exit_confirmed) {
       clearInterval(countdown);
-      await returnMenu();
+      await return_to_menu();
       document.querySelector('#exit').textContent = stringList.leave;
-    } else if (isConfirmedExit == 0) {
-      isConfirmedExit = 1;
+    } else {
+      is_exit_confirmed = true;
       document.querySelector('#exit').textContent = stringList.sure;
       document.querySelector('#exit').style.backgroundColor = 'rgb(253 230 138)';
       setTimeout(async () => {
-        isConfirmedExit = 0;
+        is_exit_confirmed = false;
         document.querySelector('#exit').textContent = stringList.leave;
         document.querySelector('#exit').style.backgroundColor = '';
       }, 3000);
@@ -489,128 +536,37 @@ const initializeGame = async (gameData, language) => {
   document.querySelector('#modeMine').classList.add('btn-selected');
   ['#modeFlag','#modeMine'].map((x, i, a) => {
     document.querySelector(x).onclick = () => {
-      clickMode = i;
+      is_revealing = i;
       document.querySelector(a[i]).classList.add('btn-selected');
       document.querySelector(a[1 - i]).classList.remove('btn-selected');
     };
   });
-  
-  let coordOfMines;
-  coordOfMines = generateMines(gameData.mines);
-  unrevealedMines = coordOfMines;
 
-  const toggleFlag = (tile, currentX, currentY, state) => {
-    if (state) {
-      tile.classList.add('flag');
-      tile.textContent = '🚩';
-      countOfFlag--;
-      countOfTile--;
-
-      if (coordOfMines.includes(`${currentX}_${currentY}`)) {
-        unrevealedMines = unrevealedMines.filter(x => x != `${currentX}_${currentY}`);
-      }
-      flaggedTiles.push(`${currentX}_${currentY}`);
-    } else {
-      tile.classList.remove('flag');
-      tile.textContent = 'ㅤ';
-      countOfFlag++;
-      countOfTile++;
-
-      flaggedTiles = flaggedTiles.filter(x => x != `${currentX}_${currentY}`);
-      if (`${currentX}_${currentY}` in coordOfMines) {
-        unrevealedMines.push(`${currentX}_${currentY}`);
-      }
-    }
-  };
-  
-  for (let currentIndex = 0; currentIndex < gameData.columns * gameData.rows; currentIndex++) {
-    let currentX = (currentIndex / gameData.columns >> 0);
-    let currentY = currentIndex % gameData.columns;
-
-    let tile = document.createElement('span');
-    tile.id = `tile_${currentX}_${currentY}`;
-    tile.textContent = 'ㅤ';
-    document.querySelector('#gameBoard').append(tile);
-
-    tile.onclick = () => {
-      if (!tile.classList.contains('revealed')) {
-        if (clickMode == 0) {
-          if (!tile.classList.contains('flag')) {
-            toggleFlag(tile, currentX, currentY, true)
-          } else {
-            toggleFlag(tile, currentX, currentY, false)
-          }
-          document.querySelector('#remainingFlags').textContent = countOfFlag;
-        } else {
-          if (!tile.classList.contains('flag')) {
-            tile.classList.add('revealed');
-            countOfTile--;
-
-            if (checkMine(coordOfMines, currentX, currentY) == 1) {
-              healthPoint--;
-              countOfMine--;
-              unrevealedMines = unrevealedMines.filter(x => x != `${currentX}_${currentY}`);
-
-              if (gameData.difficulty == 2) {
-                tile.style.backgroundImage = 'url(img/boom.png)';
-              } else {
-                tile.textContent = '💥';
-                tile.classList.add('boom');
-              }
-              
-              document.querySelector('#remainingHealth').textContent = '❤️'.repeat(healthPoint);
-              document.querySelector('#remainingMines').textContent = countOfMine;
-            } else {
-              let nearbyMinesCount = countNearbyMines(currentX, currentY);
-
-              if (gameData.difficulty == 2) {
-                tile.style.backgroundImage = 'url(img/mind.png)';
-              } else {
-                tile.textContent = nearbyMinesCount;
-              }
-              
-              if (nearbyMinesCount == 0) {
-                revealEmptyTiles(currentX, currentY);
-              }
-            }
-          }
-        }
-      }
-
-      if (
-        healthPoint == 0 || 
-        countOfMine == 0 || 
-        countOfTile == 0 || 
-        countOfFlag == 0
-      ) {
-        terminateGame();
-      }
-    };
-  }
+  init_board();
 
   let countdown = setInterval(() => {
-    countdownSeconds -= 1;
-    document.querySelector('#timeRemaining').textContent = `${parseInt(countdownSeconds / 60, 10)}: ${parseInt(countdownSeconds % 60, 10)}`
+    secs_left -= 1;
+    document.querySelector('#timeRemaining').textContent = `${parseInt(secs_left / 60, 10)}: ${parseInt(secs_left % 60, 10)}`
 
-    if (countdownSeconds == 0) {
+    if (secs_left == 0) {
       clearInterval(countdown);
-      terminateGame();
-      return gameResult;
+      terminate_game();
+      return game_result;
     }
   }, 1000);
 }
 
 const initializeSettings = () => {
   ['#difficultyEasy', '#difficultyHard', '#difficultyExtreme'].map((x, i, a) => {
-    if (i == initialData.difficulty) {
+    if (i == data.difficulty) {
       document.querySelector(x).classList.add('btn-selected');
     }
     
     document.querySelector(x).onclick = () => {
       localStorage.setItem('difficulty', i);
-      initialData.difficulty = i;
-      initialData.mines = i == 2 ? 2 : 4;
-      initialData.healthPoint = i == 0 ? 4 : i == 1 ? 2 : 1;
+      data.difficulty = i;
+      data.mine = i == 2 ? 2 : 4;
+      data.health_pt = i == 0 ? 4 : i == 1 ? 2 : 1;
       document.querySelector(x).classList.add('btn-selected');
       document.querySelector(a[i == 0 ? 1 : 0]).classList.remove('btn-selected');
       document.querySelector(a[i == 0 ? 2 : 3 - i]).classList.remove('btn-selected');
@@ -679,7 +635,7 @@ window.onload = async () => {
   });
   
   document.querySelector('#startGame').onclick = async () => {
-    initializeGame(initialData, language);
+    initializeGame(data, language);
     if (isDrawerOpened) {
       hideElement('#drawer', 0);
       isDrawerOpened = 0;
@@ -692,19 +648,19 @@ window.onload = async () => {
   document.querySelector('#langTC').onclick = async () => {
     language = 0;
     stringList = initalizeLanguage(language);
-    changeLanguage(language, pageIndex, lastGameResult);
+    changeLanguage(language, pageIndex, last_game);
   }
   
   document.querySelector('#langEN').onclick = async () => {
     language = 1;
     stringList = initalizeLanguage(language);
-    changeLanguage(language, pageIndex, lastGameResult);
+    changeLanguage(language, pageIndex, last_game);
   }
 
-  if (typeof lastGameResult == 'object') {
-    let lastGameStatus = `${stringList.lastGameResult} ${lastGameResult.isWon == 1 ? stringList.win : stringList.lost}`;
-    document.querySelector('#lastGame').textContent = lastGameStatus;
+  if (typeof last_game == 'object') {
+    let last_game_status = `${stringList.last_game} ${last_game.isWon == 1 ? stringList.win : stringList.lost}`;
+    document.querySelector('#lastGame').textContent = last_game_status;
   } else {
-    document.querySelector('#lastGame').textContent = stringList.noLastGame;
+    document.querySelector('#lastGame').textContent = stringList.last_game_null;
   }
 }
